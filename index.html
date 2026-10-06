@@ -195,7 +195,7 @@
                 </div>
             </div>
             <div class="hero-image-container">
-                <img src="Profile.png" alt="Devendar Kumavat" class="hero-profile-img">
+                <img src="profile.png" alt="Devendar Kumavat" class="hero-profile-img">
             </div>
         </div>
     </section>
@@ -424,7 +424,7 @@
         </div>
     </footer>
 
-    <script>
+   <script>
         document.addEventListener('DOMContentLoaded', () => {
             
             // Mobile Menu Logic
@@ -444,13 +444,8 @@
                 });
             });
 
-            // Scroll Reveal Animation Logic
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
+            // Scroll Reveal Animation
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -476,65 +471,106 @@
                 }
             });
 
-            // Smart Auto Image Slider (Offline Folder Logic)
-            const sliders = document.querySelectorAll('.project-slider-container');
+            // --------------------------------------------------------
+            // SMART AUTO IMAGE SLIDER (Sync + Manual Controls + JPG/PNG)
+            // --------------------------------------------------------
+            const sliderContainers = document.querySelectorAll('.project-slider-container');
+            const allActiveSliders = [];
             
-            sliders.forEach(container => {
+            // Master Global Timer: Har 3 second me saari active photos ek sath change hongi
+            setInterval(() => {
+                allActiveSliders.forEach(slider => {
+                    if(slider.imgs.length > 1 && slider.autoPlay) {
+                        slider.imgs[slider.currentIndex].style.display = 'none';
+                        slider.currentIndex = (slider.currentIndex + 1) % slider.imgs.length;
+                        slider.imgs[slider.currentIndex].style.display = 'block';
+                    }
+                });
+            }, 3000);
+
+            sliderContainers.forEach(container => {
                 const prefix = container.getAttribute('data-prefix');
                 if(!prefix) return; 
 
                 let validImages = [];
                 let currentIndex = 1;
 
-                function checkNextImage() {
-                    const imgUrl = `${prefix}${currentIndex}.png`;
-                    const img = new Image();
-                    
-                    img.onload = function() {
-                        validImages.push(imgUrl);
+                // FIX: Removed the trailing slash logic so images can be directly in the images folder
+                function loadImages() {
+                    const pngUrl = `${prefix}${currentIndex}.png`;
+                    const jpgUrl = `${prefix}${currentIndex}.jpg`;
+
+                    const imgPng = new Image();
+                    imgPng.onload = () => {
+                        validImages.push(pngUrl);
                         currentIndex++;
-                        checkNextImage();
+                        loadImages();
                     };
-                    
-                    img.onerror = function() {
-                        buildSlider(container, validImages);
+                    imgPng.onerror = () => {
+                        const imgJpg = new Image();
+                        imgJpg.onload = () => {
+                            validImages.push(jpgUrl);
+                            currentIndex++;
+                            loadImages();
+                        };
+                        imgJpg.onerror = () => {
+                            renderSlider(); 
+                        };
+                        imgJpg.src = jpgUrl;
                     };
-                    
-                    img.src = imgUrl; 
+                    imgPng.src = pngUrl;
                 }
 
-                function buildSlider(parent, imagesArr) {
-                    if(imagesArr.length === 0) {
-                        parent.innerHTML = `<div class="slider-placeholder">NO IMAGE</div>`;
+                function renderSlider() {
+                    if(validImages.length === 0) {
+                        container.innerHTML = `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.3); font-family:monospace;">NO IMAGE</div>`;
                         return;
                     }
 
-                    let imagesHTML = '';
-                    imagesArr.forEach((src) => {
-                        imagesHTML += `<img src="${src}" alt="Screenshot" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">`;
-                    });
+                    let imgTags = validImages.map((src, i) => 
+                        `<img src="${src}" style="display:${i === 0 ? 'block' : 'none'}; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; transition: opacity 0.3s;">`
+                    ).join('');
 
-                    let innerHTML = `<div class="slider-images" style="width:100%; height:100%; position:relative;">${imagesHTML}</div>`;
-                    parent.innerHTML = innerHTML;
+                    let btns = '';
+                    if(validImages.length > 1) {
+                        btns = `
+                            <div class="prev-btn" style="position:absolute; left:5px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.7); color:white; width:28px; height:28px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10; border:1px solid rgba(255,255,255,0.2); font-size:12px;">&#10094;</div>
+                            <div class="next-btn" style="position:absolute; right:5px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.7); color:white; width:28px; height:28px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10; border:1px solid rgba(255,255,255,0.2); font-size:12px;">&#10095;</div>
+                        `;
+                    }
 
-                    if(imagesArr.length > 0) {
-                        const imgs = parent.querySelectorAll('img');
-                        imgs[0].style.display = 'block';
-                        
-                        if(imgs.length > 1) {
-                            let currentSlide = 0;
-                            setInterval(() => {
-                                imgs[currentSlide].style.display = 'none';
-                                currentSlide = (currentSlide + 1) % imgs.length;
-                                imgs[currentSlide].style.display = 'block';
-                            }, 3000); 
-                        }
+                    container.innerHTML = `<div style="position:relative; width:100%; height:100%;">${imgTags}${btns}</div>`;
+
+                    if(validImages.length > 1) {
+                        const imgs = container.querySelectorAll('img');
+                        const sliderObj = { imgs: imgs, currentIndex: 0, autoPlay: true };
+                        allActiveSliders.push(sliderObj);
+
+                        const prevBtn = container.querySelector('.prev-btn');
+                        const nextBtn = container.querySelector('.next-btn');
+
+                        prevBtn.addEventListener('click', () => {
+                            sliderObj.imgs[sliderObj.currentIndex].style.display = 'none';
+                            sliderObj.currentIndex = (sliderObj.currentIndex - 1 + sliderObj.imgs.length) % sliderObj.imgs.length;
+                            sliderObj.imgs[sliderObj.currentIndex].style.display = 'block';
+                            
+                            sliderObj.autoPlay = false; 
+                            setTimeout(() => sliderObj.autoPlay = true, 5000);
+                        });
+
+                        nextBtn.addEventListener('click', () => {
+                            sliderObj.imgs[sliderObj.currentIndex].style.display = 'none';
+                            sliderObj.currentIndex = (sliderObj.currentIndex + 1) % sliderObj.imgs.length;
+                            sliderObj.imgs[sliderObj.currentIndex].style.display = 'block';
+                            
+                            sliderObj.autoPlay = false;
+                            setTimeout(() => sliderObj.autoPlay = true, 5000);
+                        });
                     }
                 }
 
-                checkNextImage();
+                loadImages(); 
             });
-
         });
     </script>
 </body>
