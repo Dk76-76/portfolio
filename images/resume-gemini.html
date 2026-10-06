@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devendar Kumavat - Resume</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: #333; /* Dark background to make resume pop like in your screenshot */
+        }
+        .resume-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .header-left h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 0;
+            color: #111827;
+            text-transform: uppercase;
+        }
+        .header-left .title {
+            color: #2563eb; /* Bright Blue */
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+        .header-right {
+            text-align: right;
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+        .header-right i {
+            width: 16px;
+            text-align: center;
+            margin-right: 5px;
+            color: #4b5563;
+        }
+        .header-right a {
+            color: #4b5563;
+            text-decoration: none;
+        }
+        .header-right a:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        .main-divider {
+            border-top: 2px solid #2563eb;
+            margin-bottom: 20px;
+        }
+
+        /* SECTION TITLES */
+        .section-title {
+            background-color: #f1f5f9;
+            border-left: 4px solid #2563eb;
+            padding: 8px 15px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 25px 0 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* SUMMARY */
+        .summary {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+            text-align: justify;
+        }
+
+        /* BADGES (SKILLS & TECH STACK) */
+        .badge {
+            display: inline-block;
+            background-color: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 12.5px;
+            font-weight: 500;
+            margin: 0 6px 8px 0;
+        }
+
+        /* SKILLS TABLE */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 180px auto;
+            align-items: baseline;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .skills-label {
+            font-weight: bold;
+            color: #111827;
+        }
+
+        /* PROJECTS */
+        .project-block {
+            margin-bottom: 25px;
+        }
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .project-title {
+            font-size: 15.5px;
+            font-weight: bold;
+            color: #111827;
+        }
+        .project-links a {
+            display: inline-block;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+            border-radius: 4px;
+            padding: 3px 10px;
+            font-size: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 8px;
+            background: #fff;
+        }
+        .project-links a:hover {
+            background-color: #eff6ff;
+        }
+        .project-tech {
+            margin-bottom: 8px;
+        }
+        .project-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        .project-bullets li {
+            position: relative;
+            padding-left: 15px;
+            margin-bottom: 4px;
+        }
+        .project-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4b5563;
+        }
+
+        /* EDUCATION */
+        .edu-block {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #374151;
+        }
+        .edu-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+        .edu-bold {
+            font-weight: bold;
+            color: #111827;
+        }
+
+        /* Highlighted Education Block */
+        .highlight-edu {
+            background-color: #f8fafc;
+            border-left: 3px solid #2563eb;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="resume-container">
+    
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-left">
+            <h1>DEVENDAR KUMAVAT</h1>
+            <div class="title">AI / MACHINE LEARNING ENGINEER</div>
+        </div>
+        <div class="header-right">
+            <div><i class="fas fa-map-marker-alt"></i> Navsari, Gujarat, India</div>
+            <div><i class="fas fa-phone-alt"></i> +91 7600765359</div>
+            <div><i class="fas fa-envelope"></i> <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank">kumavatbdevendar@gmail.com</a></div>
+            <div><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/devendar-kumavat-a67492326/" target="_blank">linkedin.com/in/devendar-kumavat</a></div>
+            <div><i class="fab fa-github"></i> <a href="https://github.com/Dk76-76" target="_blank">github.com/Dk76-76</a></div>
+        </div>
+    </div>
+    
+    <div class="main-divider"></div>
+
+    <!-- PROFESSIONAL SUMMARY -->
+    <div class="section-title">
+        <i class="far fa-user"></i> PROFESSIONAL SUMMARY
+    </div>
+    <div class="summary">
+        Results-driven AI/ML Engineer with rigorous training from IIT Patna (Vishlesan I-Hub). Specialized in architecting intelligent solutions utilizing Python, Machine Learning, NLP, and Generative AI. Proven ability to build highly scalable predictive models and interactive dashboards (FastAPI, Streamlit) that transform complex datasets into actionable insights and drive real-world business value.
+    </div>
+
+    <!-- TECHNICAL EXPERTISE -->
+    <div class="section-title">
+        <i class="far fa-star"></i> TECHNICAL EXPERTISE
+    </div>
+    
+    <div class="skills-grid">
+        <div class="skills-label">Programming:</div>
+        <div>
+            <span class="badge">Python</span>
+            <span class="badge">SQL</span>
+            <span class="badge">Java (Basic)</span>
+        </div>
+    </div>
+    <div class="skills-grid">
+        <div class="skills-label">AI & Domains:</div>
+        <div>
+            <span class="badge">Machine Learning</span>
+            <span class="badge">NLP</span>
+            <span class="badge">Computer Vision</span>
+            <span class="badge">Generative AI</span>
+        </div>
+    </div>
+    <div class="skills-grid">
+        <div class="skills-label">Libraries & Tools:</div>
+        <div>
+            <span class="badge">FastAPI</span>
+            <span class="badge">Streamlit</span>
+            <span class="badge">TensorFlow</span>
+            <span class="badge">Keras</span>
+            <span class="badge">Scikit-learn</span>
+            <span class="badge">Pandas</span>
+            <span class="badge">NLTK</span>
+            <span class="badge">Git</span>
+        </div>
+    </div>
+
+    <!-- FEATURED PROJECTS -->
+    <div class="section-title">
+        <i class="fas fa-suitcase"></i> FEATURED PROJECTS
+    </div>
+
+    <!-- Project 1 -->
+    <div class="project-block">
+        <div class="project-header">
+            <div class="project-title">AI Movie Recommendation System</div>
+            <div class="project-links">
+                <a href="#" target="_blank">Live Demo</a>
+                <a href="#" target="_blank">Readme File</a>
+            </div>
+        </div>
+        <div class="project-tech">
+            <span class="badge">Python</span>
+            <span class="badge">FastAPI</span>
+            <span class="badge">Scikit-learn</span>
+            <span class="badge">Pandas</span>
+            <span class="badge">Streamlit</span>
+        </div>
+        <ul class="project-bullets">
+            <li>Architected a robust content-based filtering engine utilizing cosine similarity to analyze 10,000+ movie data points for hyper-personalized user recommendations.</li>
+            <li>Engineered a highly optimized REST API using FastAPI, serving predictive inferences with sub-100ms latency.</li>
+        </ul>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-block">
+        <div class="project-header">
+            <div class="project-title">HeartCare AI - Predictive Diagnostics</div>
+            <div class="project-links">
+                <a href="https://heartcare-ai-jwy4.onrender.com" target="_blank">Live Demo</a>
+                <a href="https://github.com/Dk76-76/HeartCare-AI/edit/main/README.md" target="_blank">Readme File</a>
+            </div>
+        </div>
+        <div class="project-tech">
+            <span class="badge">Python</span>
+            <span class="badge">FastAPI</span>
+            <span class="badge">Streamlit</span>
+            <span class="badge">Scikit-learn</span>
+        </div>
+        <ul class="project-bullets">
+            <li>Developed an advanced predictive analytics model to assess cardiovascular disease risk, achieving a 92% overall diagnostic accuracy rate.</li>
+            <li>Executed rigorous feature engineering on complex clinical datasets to successfully mitigate severe data imbalances.</li>
+        </ul>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-block">
+        <div class="project-header">
+            <div class="project-title">Emotion AI - Text Classification</div>
+            <div class="project-links">
+                <a href="#" target="_blank">Live Demo</a>
+                <a href="#" target="_blank">Readme File</a>
+            </div>
+        </div>
+        <div class="project-tech">
+            <span class="badge">NLP</span>
+            <span class="badge">Python</span>
+            <span class="badge">NLTK</span>
+            <span class="badge">Scikit-learn</span>
+        </div>
+        <ul class="project-bullets">
+            <li>Created a sophisticated Natural Language Processing classification model capable of categorizing textual data into nuanced emotional states.</li>
+            <li>Streamlined end-to-end text preprocessing pipelines, leveraging tokenization, lemmatization, and TF-IDF vectorization.</li>
+        </ul>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="project-block">
+        <div class="project-header">
+            <div class="project-title">Next Word Prediction Engine</div>
+            <div class="project-links">
+                <a href="#" target="_blank">Live Demo</a>
+                <a href="#" target="_blank">Readme File</a>
+            </div>
+        </div>
+        <div class="project-tech">
+            <span class="badge">TensorFlow</span>
+            <span class="badge">Keras</span>
+            <span class="badge">Python</span>
+            <span class="badge">LSTM</span>
+        </div>
+        <ul class="project-bullets">
+            <li>Engineered a deep learning language model utilizing Long Short-Term Memory (LSTM) networks in TensorFlow to predict context-aware sequential text.</li>
+            <li>Optimized data ingestion and tokenization pipelines specifically tailored for the heavy computational demands of recurrent neural networks.</li>
+        </ul>
+    </div>
+
+    <!-- EDUCATION & TRAINING -->
+    <div class="section-title">
+        <i class="fas fa-graduation-cap"></i> EDUCATION & TRAINING
+    </div>
+    
+    <!-- Highlighted Top Education -->
+    <div class="edu-block highlight-edu">
+        <div class="edu-row">
+            <span class="edu-bold">AI & Machine Learning Certification</span>
+            <span style="font-weight: bold; color: #2563eb;">Ongoing</span>
+        </div>
+        <div class="edu-row">
+            <span>Masai School (In Collaboration with IIT Patna, Vishlesan I-Hub)</span>
+            <span>Professional Training</span>
+        </div>
+    </div>
+
+    <div class="edu-block">
+        <div class="edu-row">
+            <span class="edu-bold">Bachelor of Computer Applications (BCA)</span>
+            <span>July 2022-April 2025</span>
+        </div>
+        <div class="edu-row">
+            <span>S. S. Agrawal College, VNSGU</span>
+            <span>CGPA: 7.84</span>
+        </div>
+    </div>
+
+    <div class="edu-block">
+        <div class="edu-row">
+            <span class="edu-bold">Higher Secondary (Commerce)</span>
+            <span>2021</span>
+        </div>
+        <div class="edu-row">
+            <span>Seth P. H. Vidyalaya</span>
+            <span>81.5% (Grade A2)</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
