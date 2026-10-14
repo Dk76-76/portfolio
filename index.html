@@ -1,493 +1,1491 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="top">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devendar Kumavat | AI/ML Engineer</title>
+    
+    <!-- SEO Meta Tags for Google Search -->
+    <title>Devendar Kumavat | AI & ML Engineer</title>
+    <meta name="description" content="Portfolio of Devendar Kumavat - Generative AI & Machine Learning Engineer specializing in RAG Pipelines, Computer Vision (YOLOv8, CNN), and scalable FastAPI backends.">
+    <meta name="keywords" content="Devendar Kumavat, AI Engineer, Machine Learning, Generative AI, Python, FastAPI, YOLOv8, Computer Vision, Portfolio, Navsari">
+    <meta name="author" content="Devendar Kumavat">
+    
+    <!-- Favicon (Browser Tab Logo with only >) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text x=%2215%22 y=%22.85em%22 font-family=%22monospace%22 font-weight=%22bold%22 font-size=%2290%22 fill=%22%2300f2fe%22>&gt;</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* CSS Variables */
         :root {
-            --bg-color: #050507;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --accent-glow: #4facfe;
-            --accent-glow-alt: #00f2fe;
-            --glass-bg: rgba(255, 255, 255, 0.03);
+            --bg-base: #030305;
+            --accent: #00f2fe; 
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --glass-bg: rgba(20, 20, 25, 0.6);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --font-mono: 'Courier New', Courier, monospace;
         }
 
-        /* Global Reset & Base */
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--bg-color); color: var(--text-primary);
-            font-family: var(--font-main); line-height: 1.6; overflow-x: hidden; position: relative;
+        body { 
+            background-color: var(--bg-base); 
+            color: #f8f9fa; 
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            margin: 0;
+            padding-bottom: 50px;
+            scroll-behavior: smooth;
         }
 
-        /* Ambient Background */
-        body::before {
-            content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle at center, rgba(79, 172, 254, 0.04) 0%, transparent 60%);
-            z-index: -1; pointer-events: none;
-        }
-
-        /* Glassmorphism Utilities */
-        .glass-panel {
-            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border); border-radius: 12px;
-        }
-
-        /* Typography */
-        h1, h2, h3, h4 { font-weight: 600; line-height: 1.2; }
-        .gradient-text {
-            background: linear-gradient(90deg, var(--accent-glow), var(--accent-glow-alt));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            display: inline-block; padding-bottom: 0.15em; line-height: 1.3;
-        }
-
-        /* Layout & Sections */
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-
-        section {
-            padding: 5rem 0; opacity: 0; transform: translateY(15px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out; clear: both;
-        }
-
-        section.visible { opacity: 1; transform: translateY(0); }
-
-        .section-header { margin-top: 3rem; margin-bottom: 3rem; font-size: 2.2rem; text-align: center; }
-        .subsection-header { font-size: 1.5rem; color: var(--text-primary); margin: 3rem 0 1.5rem 0; padding-bottom: 0.5rem; border-bottom: 1px solid var(--glass-border); }
-
-        /* Navbar */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 1.2rem 0; z-index: 1000;
-            background: rgba(5, 5, 7, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border);
-        }
-        .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; color: var(--text-primary); text-decoration: none; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 2rem; font-size: 0.9rem; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--accent-glow); }
-        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; padding: 0.5rem; }
-
-        /* Hero Section */
-        .hero { padding-top: 160px; padding-bottom: 4rem; min-height: 100vh; display: flex; align-items: flex-start; }
-        .hero-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap-reverse; gap: 3rem; width: 100%; }
-        .hero-content { flex: 1; min-width: 300px; max-width: 750px; }
-        .hero-image-container { display: flex; justify-content: center; align-items: center; padding: 1rem; }
-        .hero-profile-img { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border); box-shadow: 0 0 35px rgba(79, 172, 254, 0.3); background: var(--glass-bg); transition: box-shadow 0.3s ease, transform 0.3s ease; }
-        .hero-profile-img:hover { box-shadow: 0 0 50px rgba(79, 172, 254, 0.5); transform: scale(1.03); }
-        .hero-subtitle { font-family: var(--font-mono); color: var(--accent-glow); margin-bottom: 1rem; font-size: 0.95rem; letter-spacing: 1px; }
-        .hero-title { font-size: clamp(2.8rem, 5vw, 4rem); margin-bottom: 1.2rem; letter-spacing: -0.5px; }
-        .hero-desc { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 650px; }
-
-        /* Buttons */
-        .btn { display: inline-block; padding: 0.7rem 1.8rem; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.2s ease; cursor: pointer; text-align: center; }
-        .btn-primary { background: linear-gradient(90deg, #4facfe, #00f2fe); color: #050507; border: none; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2); }
-        .btn-primary:hover { box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4); transform: translateY(-1px); }
-        .btn-secondary { background: transparent; color: var(--text-primary); border: 1px solid var(--glass-border); }
-        .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--accent-glow); }
-        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-        /* About & Education */
-        .about-text { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 0 auto; text-align: justify; }
-        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .edu-card { padding: 1.8rem; transition: transform 0.2s; }
-        .edu-card:hover { border-color: rgba(79, 172, 254, 0.3); }
-        .edu-date { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-glow); margin-bottom: 0.5rem; }
-        .edu-title { font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-primary); }
-        .edu-inst { font-size: 0.95rem; color: var(--text-secondary); }
-
-        /* Skills Grid */
-        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-        .skill-category { padding: 1.8rem; }
-        .skill-category h3 { margin-bottom: 1.2rem; font-size: 1.1rem; color: var(--accent-glow-alt); }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-        .skill-tag { background: rgba(255, 255, 255, 0.04); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; color: var(--text-primary); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s; }
-        .skill-tag:hover { border-color: var(--accent-glow); color: var(--accent-glow); }
-
-        /* Projects Grid & Manual Slider CSS */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
-        .project-card { padding: 2rem; display: flex; flex-direction: column; height: 100%; transition: transform 0.2s, border-color 0.2s; position: relative; }
-        .project-card:hover { transform: translateY(-4px); border-color: rgba(79, 172, 254, 0.4); }
-        .project-badge { position: absolute; top: -10px; right: 20px; background: linear-gradient(90deg, #4facfe, #00f2fe); color: #000; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.8rem; border-radius: 20px; text-transform: uppercase; box-shadow: 0 4px 10px rgba(79, 172, 254, 0.3); z-index: 10; }
-        .project-badge.pending { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-
-        /* Image Slider Wrapper */
-        .project-slider-container { width: 100%; height: 180px; border-radius: 6px; margin-bottom: 1.5rem; border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; }
-        .slider-images { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
-        .slider-images img { min-width: 100%; height: 100%; object-fit: cover; }
-        .slider-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); color: rgba(255,255,255,0.3); font-size: 1rem; }
-
-        .project-title { font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-primary); }
-        .project-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
-        .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); }
-        .project-tech span { background: rgba(0, 0, 0, 0.4); padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid rgba(255,255,255,0.05); }
+        .font-mono-tech { font-family: var(--font-mono); }
+        .gradient-text { background: linear-gradient(135deg, #fff 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .project-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+        .section-wrapper { padding: 100px 0; position: relative; }
 
-        /* GitHub Statistics */
-        .gh-stats-wrapper { display: flex; flex-direction: column; gap: 2rem; align-items: center; width: 100%; }
-        .gh-stats-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: stretch; width: 100%; }
-        .gh-stat-card { flex: 1 1 400px; max-width: 100%; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); transition: transform 0.3s, border-color 0.3s; }
-        .gh-stat-wide { width: 100%; max-width: 900px; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 2.5rem 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-x: auto; }
+        /* ================== HEADER & FOOTER ANIMATIONS ================== */
+        .hover-rotate { display: inline-block; transition: transform 0.3s ease; }
+        .group:hover .hover-rotate { transform: rotate(90deg); }
 
-        /* Contact Section */
-        .contact-content { text-align: center; max-width: 600px; margin: 0 auto; }
-        .contact-info { display: flex; justify-content: center; gap: 2.5rem; margin: 2.5rem 0; flex-wrap: wrap; }
-        .contact-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--text-secondary); transition: color 0.2s; font-size: 0.95rem; }
-        .contact-item:hover { color: var(--accent-glow); }
-        .contact-item svg { width: 22px; height: 22px; fill: currentColor; }
+        .nav-link { position: relative; display: inline-flex; align-items: center; gap: 6px; padding-bottom: 4px; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--accent); transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-arrow { display: inline-block; transition: transform 0.3s ease; font-weight: bold; }
+        .nav-link:hover .nav-arrow { transform: rotate(90deg); color: var(--accent); }
 
-        footer { text-align: center; padding: 2rem 0; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--glass-border); }
+        .footer-link { position: relative; display: inline-flex; align-items: center; gap: 6px; padding-bottom: 2px; width: fit-content; }
+        .footer-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 0; background-color: var(--accent); transition: width 0.3s ease; }
+        .footer-link:hover::after { width: 100%; }
+        .footer-arrow { display: inline-block; transition: transform 0.3s ease; font-weight: bold; }
+        .footer-link:hover .footer-arrow { transform: rotate(-90deg); color: var(--accent); }
 
-        /* Responsive Mobile Changes */
-       @media (max-width: 768px) {
-            .mobile-menu-btn { display: block; }
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(5, 5, 7, 0.98); padding: 1rem 0; border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(12px); }
-            .nav-links.active { display: flex; }
-            .nav-links a { margin: 1rem 0; text-align: center; }
-            .hero { padding-top: 120px; }
-            .hero-profile-img { width: 300px; height: 300px; } 
-            .hero-title { font-size: 2.2rem; }
-            .section-header { font-size: 1.8rem; }
-            .hero-actions { flex-direction: column; width: 100%; }
-            .hero-actions .btn { width: 100%; }
+        /* ================== HERO SPECIFICS (100% DEMO SCANNER) ================== */
+        .typewriter { border-right: 3px solid var(--accent); padding-right: 5px; animation: blink 0.75s step-end infinite; }
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        @keyframes scanDown {
+            0% { height: 0%; opacity: 1; }
+            70% { height: 100%; opacity: 1; }
+            85% { height: 100%; opacity: 0; }
+            100% { height: 0%; opacity: 0; }
         }
+        .color-wipe { position: absolute; top: 0; left: 0; width: 100%; overflow: hidden; animation: scanDown 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; z-index: 10; }
+        .scanner-beam { position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--accent); box-shadow: 0 0 15px 3px rgba(0, 242, 254, 0.7); }
+
+        .bb-tl { position: absolute; top: 10%; left: 10%; width: 25px; height: 25px; border-top: 3px solid var(--accent); border-left: 3px solid var(--accent); z-index: 20; transition: all 0.3s;}
+        .bb-tr { position: absolute; top: 10%; right: 10%; width: 25px; height: 25px; border-top: 3px solid var(--accent); border-right: 3px solid var(--accent); z-index: 20; transition: all 0.3s;}
+        .bb-bl { position: absolute; bottom: 10%; left: 10%; width: 25px; height: 25px; border-bottom: 3px solid var(--accent); border-left: 3px solid var(--accent); z-index: 20; transition: all 0.3s;}
+        .bb-br { position: absolute; bottom: 10%; right: 10%; width: 25px; height: 25px; border-bottom: 3px solid var(--accent); border-right: 3px solid var(--accent); z-index: 20; transition: all 0.3s;}
+
+        .ident-box:hover .bb-tl { top: 5%; left: 5%; }
+        .ident-box:hover .bb-tr { top: 5%; right: 5%; }
+        .ident-box:hover .bb-bl { bottom: 5%; left: 5%; }
+        .ident-box:hover .bb-br { bottom: 5%; right: 5%; }
+
+        @keyframes hudUpdate { 0% { opacity: 0; transform: translateY(-5px); } 100% { opacity: 1; transform: translateY(0); } }
+        .hud-animate { animation: hudUpdate 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+        /* ================== 1. MOUSE FLASHLIGHT HOVER GLOW EFFECT ================== */
+        .about-module-card, .v1-card, .project-card, .edu-card, .contact-glass-card, .metric-card {
+            position: relative;
+        }
+        .about-module-card::before, .v1-card::before, .project-card::before, .edu-card::before, .contact-glass-card::before, .metric-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit; 
+            background: radial-gradient(450px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(0, 242, 254, 0.12), transparent 40%);
+            z-index: 0;
+            pointer-events: none;
+            transition: background 0.3s ease;
+        }
+        .about-module-card > *, .v1-card > *, .project-card > *, .edu-card > *, .contact-glass-card > *, .metric-card > * {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ================== ABOUT ME SPECIFICS ================== */
+        .glass-panel { background: rgba(20, 20, 25, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .highlight-cyan { color: var(--accent); font-weight: 600; text-shadow: 0 0 10px rgba(0,242,254,0.3); }
+        .highlight-white { color: #ffffff; font-weight: 700; }
+
+        .about-module-card {
+            background: rgba(20, 20, 25, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+            box-shadow: -4px 0 15px -5px rgba(0, 242, 254, 0.2);
+            display: flex; gap: 1rem; align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        .about-module-card:hover {
+            transform: translateX(10px);
+            background: rgba(0, 242, 254, 0.05);
+            box-shadow: -8px 0 20px -5px rgba(0, 242, 254, 0.5);
+            border-left-width: 6px;
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        /* Telemetry Metric Cards */
+        .metric-card {
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .metric-card:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* ================== 2. SKILLS SPECIFICS (ALL ICONS GLOW FIXED) ================== */
+        .marquee-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: space-evenly;
+            z-index: 0; pointer-events: none; opacity: 0.25; 
+            transform: rotate(-2deg) scale(1.1); 
+            mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+        }
+        
+        .marquee-track {
+            display: flex; white-space: nowrap; 
+            font-family: var(--font-mono); font-size: 5rem; font-weight: 800; 
+            color: transparent; 
+            -webkit-text-stroke: 1px var(--accent); 
+            animation: scroll-left 40s linear infinite;
+        }
+        .marquee-track.reverse { animation: scroll-right 50s linear infinite; }
+        
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+
+        .v1-card { 
+            background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(16px);
+            border-radius: 1.5rem; padding: 2.5rem; border: 1px solid var(--glass-border); 
+            transition: all 0.4s ease; position: relative; z-index: 10; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .v1-card:hover { border-color: rgba(0, 242, 254, 0.4); box-shadow: 0 15px 40px rgba(0, 242, 254, 0.15); transform: translateY(-5px); }
+        
+        .v1-tag { 
+            background: rgba(0, 242, 254, 0.03); border: 1px solid rgba(0, 242, 254, 0.15); 
+            color: #d1d5db; padding: 8px 16px; border-radius: 50px; font-family: var(--font-mono); font-size: 11px; 
+            transition: all 0.3s; cursor: default; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .tech-icon { width: 14px; height: 14px; transition: all 0.3s; object-fit: contain; }
+        .generic-svg { width: 14px; height: 14px; stroke: currentColor; transition: all 0.3s; }
+        
+        /* Fixed: Both .tech-icon AND .generic-svg (like REST API, YOLO, FAISS) now glow identically on card hover */
+        .v1-card:hover .v1-tag { border-color: rgba(0, 242, 254, 0.3); color: white; background: rgba(0, 242, 254, 0.05); }
+        .v1-card:hover .v1-tag .tech-icon,
+        .v1-card:hover .v1-tag .generic-svg { 
+            filter: drop-shadow(0 0 4px var(--accent)); 
+            stroke: var(--accent);
+        }
+        
+        /* Fixed: Both .tech-icon AND .generic-svg turn black cleanly when hovering directly on the pill tag */
+        .v1-tag:hover { background: var(--accent) !important; color: black !important; box-shadow: 0 0 15px var(--accent) !important; transform: scale(1.05); border-color: var(--accent) !important; }
+        .v1-tag:hover .tech-icon { filter: brightness(0) !important; }
+        .v1-tag:hover .generic-svg { stroke: #000000 !important; filter: none !important; }
+
+        /* ================== 3. PROJECTS & SMOOTH SLIDER SPECIFICS ================== */
+        .project-card { background: var(--glass-bg); backdrop-filter: blur(16px); border-radius: 1.5rem; position: relative; padding: 1.5rem; margin-top: 40px; border: 1px solid var(--glass-border); display: flex; flex-direction: column; transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+        
+        .project-slider-container { margin-top: -50px; height: 220px; border-radius: 1rem; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); margin-bottom: 1.5rem; background: #0a0a0f; position: relative; overflow: hidden; z-index: 20 !important; transition: transform 0.4s ease, border-color 0.4s ease; }
+        
+        /* Smooth Crossfade + Subtle Zoom Slider Image Class */
+        .slider-img-smooth {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.06);
+            transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1), transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        .slider-img-smooth.active-slide {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+        
+        .slider-btn { position: absolute; top: 0; bottom: 0; width: 36px; background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(4px); color: rgba(255,255,255,0.85); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: all 0.3s ease; opacity: 0; }
+        .project-slider-container:hover .slider-btn { opacity: 1; }
+        .prev-btn { left: 0; border-right: 1px solid rgba(255,255,255,0.05); transform: translateX(-10px); }
+        .next-btn { right: 0; border-left: 1px solid rgba(255,255,255,0.05); transform: translateX(10px); }
+        .project-slider-container:hover .prev-btn, .project-slider-container:hover .next-btn { transform: translateX(0); }
+
+        .status-badge { position: absolute; top: 12px; right: 12px; backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: 1px; z-index: 25; border: 1px solid; text-transform: uppercase; font-family: var(--font-mono); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        
+        .skill-tag { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: #a0a0b0; font-family: var(--font-mono); font-size: 10px; font-weight: 500; padding: 5px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s ease; }
+        .skill-dot { width: 4px; height: 4px; border-radius: 50%; background: #a0a0b0; transition: all 0.3s; }
+
+        .btn-action { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; text-align: center; padding: 10px 0; border-radius: 8px; font-size: 12px; font-weight: 600; transition: all 0.3s ease; cursor: pointer; text-decoration: none; }
+        .btn-action svg { transition: transform 0.3s ease; }
+
+        .completed-card:hover { transform: translateY(-8px); border-color: rgba(0,242,254,0.4); box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15); }
+        .completed-card:hover .project-slider-container { transform: scale(1.03); border-color: rgba(0,242,254,0.4); }
+        .completed-card .slider-btn:hover { background: rgba(0, 242, 254, 0.2); color: var(--accent); }
+        .completed-card .status-badge { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+        
+        .completed-card:hover .skill-tag { border-color: rgba(0,242,254,0.25); color: var(--accent); background: rgba(0,242,254,0.03); }
+        .completed-card:hover .skill-dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        
+        .btn-cyan-primary { background: white; color: black; border: 1px solid white; }
+        .btn-cyan-primary:hover { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 15px rgba(0,242,254,0.3); }
+        .btn-cyan-primary:hover svg { transform: translate(3px, -3px); } 
+        
+        .btn-cyan-secondary { border: 1px solid rgba(255,255,255,0.15); color: #d1d5db; background: rgba(255,255,255,0.02); }
+        .btn-cyan-secondary:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,242,254,0.05); }
+        .btn-cyan-secondary:hover svg { transform: scale(1.1) rotate(5deg); } 
+
+        .stealth-card { border: 1px solid rgba(255, 255, 255, 0.1); }
+        .stealth-card:hover { transform: translateY(-8px); border-color: rgba(0,242,254,0.4); box-shadow: 0 20px 40px rgba(0,242,254,0.15); }
+        .stealth-card:hover .project-slider-container { transform: scale(1.03); border-color: rgba(0,242,254,0.4); }
+        .stealth-card .slider-btn:hover { background: rgba(255, 255, 255, 0.15); color: white; }
+        
+        .stealth-card .status-badge { background: rgba(255, 255, 255, 0.1); color: white; border-color: rgba(255, 255, 255, 0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+        .stealth-card:hover .skill-tag { border-color: rgba(255,255,255,0.3); color: white; background: rgba(255,255,255,0.05); }
+        .stealth-card:hover .skill-dot { background: white; box-shadow: 0 0 8px white; }
+
+        .btn-stealth { background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .btn-stealth:hover { background: white; color: black; box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); border-color: white; }
+        .btn-stealth:hover svg { transform: scale(1.1) translateY(-2px); }
+
+        @keyframes loadProgress { 0% { width: 0%; } 100% { width: var(--target-width); } }
+        .progress-silver { 
+            height: 100%; border-radius: 99px; background: white; 
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); 
+            animation: loadProgress 1.5s ease-out forwards; 
+            position: relative; overflow: hidden;
+        }
+        .progress-silver::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,242,254,0.8), transparent);
+            animation: scanBar 2s linear infinite;
+        }
+        @keyframes scanBar { 0% { left: -100%; } 100% { left: 200%; } }
+
+        /* ================== EDUCATION SPECIFICS ================== */
+        .v3-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 768px) { .v3-grid { grid-template-columns: repeat(3, 1fr); } }
+        .v3-large { grid-column: span 1; }
+        @media (min-width: 768px) { .v3-large { grid-column: span 3; } }
+        
+        .edu-card { 
+            background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(16px);
+            border-radius: 1.5rem; border: 1px solid var(--glass-border); 
+            padding: 2rem; position: relative; z-index: 10; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.4s ease;
+            display: flex; flex-direction: column; min-height: 280px;
+        }
+        .edu-card:hover { border-color: rgba(0, 242, 254, 0.4); box-shadow: 0 15px 40px rgba(0, 242, 254, 0.15); transform: translateY(-5px); z-index: 40; }
+        
+        .v3-badge { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 800; font-family: var(--font-mono); letter-spacing: 1px; text-transform: uppercase; }
+        
+        .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 10px 15px; display: inline-flex; flex-direction: column; justify-content: center; }
+        .stat-value { font-family: var(--font-mono); font-size: 1.25rem; font-weight: bold; color: var(--accent); line-height: 1; }
+        .stat-label { font-size: 0.65rem; color: gray; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        .tooltip-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #d1d5db;
+            padding: 8px 16px; border-radius: 8px; font-weight: bold; transition: all 0.3s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-family: var(--font-mono);
+            position: relative; text-decoration: none; width: 100%; margin-top: auto; cursor: pointer;
+        }
+        .tooltip-img {
+            position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%) translateY(20px);
+            width: 250px; border-radius: 8px; border: 2px solid var(--accent);
+            opacity: 0; pointer-events: none; transition: all 0.4s ease;
+            box-shadow: 0 15px 35px rgba(0,242,254,0.2); z-index: 50; object-fit: contain; background: black;
+        }
+        .tooltip-btn:hover .tooltip-img { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .tooltip-btn:hover { background: rgba(0,242,254,0.1); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 15px rgba(0,242,254,0.2); }
+
+        .tooltip-btn.primary-btn { background: rgba(0,242,254,0.1); border-color: var(--accent); color: var(--accent); width: max-content; margin-top: 0; }
+        .tooltip-btn.primary-btn:hover { background: var(--accent); color: black; box-shadow: 0 0 20px rgba(0,242,254,0.4); }
+
+        .terminal-box {
+            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+            padding: 12px; width: 100%; text-align: left; margin-top: auto;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .typewriter-text {
+            color: white; font-family: var(--font-mono); font-size: 11px;
+            overflow: hidden; white-space: nowrap; border-right: 2px solid var(--accent);
+            display: inline-block; vertical-align: bottom;
+            animation: typing 4s steps(30, end) infinite, blink-caret 0.75s step-end infinite;
+        }
+        .typewriter-text::before {
+            content: "Building_AI_Models...";
+            animation: text-cycle 20s infinite;
+        }
+        @keyframes text-cycle {
+            0%, 19.9% { content: "Building_AI_Models..."; }
+            20%, 39.9% { content: "Training_Neural_Nets..."; }
+            40%, 59.9% { content: "Optimizing_Backend..."; }
+            60%, 79.9% { content: "Learning_New_Tech..."; }
+            80%, 100% { content: "Deploying_Servers..."; }
+        }
+        @keyframes typing {
+            0%, 10% { width: 0; }
+            40%, 70% { width: 23ch; }
+            90%, 100% { width: 0; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--accent); }
+        }
+
+        /* ================== 4. CONTACT SPECIFICS (WITH EDU-CARD HOVER EFFECT) ================== */
+        .contact-glass-card { 
+            background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(16px);
+            border-radius: 1.5rem; border: 1px solid var(--glass-border); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        /* Exact same hover animation as Education cards */
+        .contact-glass-card:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 242, 254, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .contact-row {
+            display: flex; align-items: center; gap: 16px; padding: 16px;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px; transition: all 0.3s; text-decoration: none;
+        }
+        .contact-row:hover { background: rgba(0,242,254,0.05); border-color: rgba(0,242,254,0.3); transform: translateX(5px); }
+        .contact-icon {
+            width: 40px; height: 40px; border-radius: 10px; background: rgba(0,242,254,0.1);
+            color: var(--accent); display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(0,242,254,0.2);
+        }
+
+        .chat-bubble-animated {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px 16px; border-radius: 0 1rem 1rem 1rem;
+            font-family: var(--font-mono); font-size: 12px; color: white;
+            max-width: 90%; 
+            opacity: 0; transform: translateY(15px); transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .chat-bubble-animated.show-bubble { opacity: 1; transform: translateY(0); }
+        
+        .chat-bubble-animated.user-msg {
+            background: rgba(0,242,254,0.1); border-color: rgba(0,242,254,0.4); color: white;
+            border-radius: 1rem 0 1rem 1rem; margin-left: auto;
+        }
+        .chat-bubble-animated.success-msg { background: rgba(0,255,65,0.05); border-color: rgba(0,255,65,0.3); color: white; }
+
+        .typing-dot {
+            display: inline-block; width: 4px; height: 4px; border-radius: 50%;
+            background-color: var(--accent); margin: 0 2px;
+            animation: typingDot 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; } .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typingDot { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        .ai-input-box {
+            background: rgba(0,0,0,0.6); border-top: 1px solid rgba(0,242,254,0.2);
+            padding: 20px; display: flex; flex-direction: column; gap: 12px;
+        }
+        .ai-input {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1);
+            color: white; font-family: var(--font-mono); font-size: 13px;
+            padding: 12px 16px; border-radius: 8px; outline: none; transition: all 0.3s; width: 100%;
+        }
+        .ai-input:focus { border-color: var(--accent); background: rgba(0,242,254,0.05); box-shadow: 0 0 10px rgba(0,242,254,0.1); }
+        .ai-input::placeholder { color: rgba(255,255,255,0.6); }
+
+        #chat-history { height: 260px; min-height: 260px; }
+        #chat-history::-webkit-scrollbar { width: 4px; }
+        #chat-history::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="container nav-content">
-            <a href="#" class="nav-logo">Devendar<span class="gradient-text">.AI</span></a>
+    <!-- ================= PRO STICKY HEADER ================= -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-[#030305]/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             
-            <button class="mobile-menu-btn" aria-label="Toggle Menu">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            <!-- Logo / Brand (With only >) -->
+            <a href="#top" class="flex items-center gap-2 group">
+                <span class="text-[--accent] font-mono-tech text-2xl font-black group-hover:rotate-90 transition-transform duration-300">></span>
+                <span class="text-white text-lg font-black tracking-widest uppercase">Devendar.<span class="text-[--accent]">ai</span></span>
+            </a>
+
+            <!-- Navigation Links with > and Underline Animation -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#about" class="text-gray-400 hover:text-[--accent] transition-colors text-xs font-mono-tech tracking-wider nav-link"><span class="nav-arrow">></span> ABOUT</a>
+                <a href="#skills" class="text-gray-400 hover:text-[--accent] transition-colors text-xs font-mono-tech tracking-wider nav-link"><span class="nav-arrow">></span> SKILLS</a>
+                <a href="#projects" class="text-gray-400 hover:text-[--accent] transition-colors text-xs font-mono-tech tracking-wider nav-link"><span class="nav-arrow">></span> PROJECTS</a>
+                <a href="#education" class="text-gray-400 hover:text-[--accent] transition-colors text-xs font-mono-tech tracking-wider nav-link"><span class="nav-arrow">></span> EDUCATION</a>
+                <a href="#contact" class="text-gray-400 hover:text-[--accent] transition-colors text-xs font-mono-tech tracking-wider nav-link"><span class="nav-arrow">></span> CONTACT</a>
+            </nav>
+
+            <!-- Status Indicator -->
+            <div class="hidden md:flex items-center gap-3">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span class="font-mono-tech text-[10px] text-gray-300">Ready to Deploy</span>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
             </button>
-            
-            <div class="nav-links">
-                <a href="#about-me">About</a>
-                <a href="#education">Education</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#github-stats">Stats</a>
-                <a href="#contact">Contact</a>
-            </div>
         </div>
-    </nav>
 
-    <section id="hero" class="hero container visible">
-        <div class="hero-inner">
-            <div class="hero-content">
-                <p class="hero-subtitle"></p>
-                <h1 class="hero-title">Devendar Kumavat<br><span class="gradient-text">Generative AI & ML Engineer</span></h1>
-                <p class="hero-desc">
-                    Building intelligent AI applications with Machine Learning, Generative AI, NLP, Computer Vision, and modern deployment technologies.
-                </p>
-               <div class="hero-actions">
-                    <a href="DK_Resume.pdf" target="_blank" class="btn btn-primary">View Resume</a>
-                    <a href="https://github.com/Dk76-76" target="_blank" class="btn btn-secondary">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="vertical-align: text-bottom; margin-right: 5px;"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        GitHub Profile
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image-container">
-                <img src="profile.png" alt="Devendar Kumavat" class="hero-profile-img">
-            </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#030305] border-b border-white/10 px-6 py-4 space-y-4 font-mono-tech text-xs">
+            <a href="#about" class="block text-gray-300 hover:text-[--accent]">> ABOUT</a>
+            <a href="#skills" class="block text-gray-300 hover:text-[--accent]">> SKILLS</a>
+            <a href="#projects" class="block text-gray-300 hover:text-[--accent]">> PROJECTS</a>
+            <a href="#education" class="block text-gray-300 hover:text-[--accent]">> EDUCATION</a>
+            <a href="#contact" class="block text-gray-300 hover:text-[--accent]">> CONTACT</a>
         </div>
-    </section>
+    </header>
 
-    <section id="about-me" class="container">
-        <h2 class="section-header">About <span class="gradient-text">Me</span></h2>
-        <div class="glass-panel" style="padding: 3rem 2rem;">
-            <p class="about-text">
-                Results-driven AI & Machine Learning Engineer with strong expertise in developing scalable, end-to-end AI applications using Python, TensorFlow, and Generative AI (LangChain, FAISS). Proven track record of building Computer Vision models, RAG-based chatbots, and predictive ML systems, seamlessly deploying them via FastAPI and Docker. Passionate about leveraging data-driven architectures to solve complex, real-world business challenges.
-            </p>
-        </div>
-    </section>
+    <!-- Spacer for fixed header -->
+    <div class="h-20"></div>
 
-    <section id="education" class="container">
-        <h2 class="section-header">Academic <span class="gradient-text">Background</span></h2>
-        <div class="edu-grid">
-            <div class="glass-panel edu-card">
-                <div class="edu-date">2025 - Present</div>
-                <h3 class="edu-title">Gen AI & Machine Learning Engineering Program</h3>
-                <p class="edu-inst">Vishlesan i-Hub, IIT Patna & Masai School<br>CGPA: 6.23</p>
-            </div>
-            <div class="glass-panel edu-card">
-                <div class="edu-date">Completed</div>
-                <h3 class="edu-title">Bachelor of Computer Applications (BCA)</h3>
-                <p class="edu-inst">S. S. Agrawal College, Navsari<br>CGPA: 7.84</p>
-            </div>
-            <div class="glass-panel edu-card">
-                <div class="edu-date">2021</div>
-                <h3 class="edu-title">Higher Secondary Education (12th - Commerce)</h3>
-                <p class="edu-inst">Seth P.H. Vidyalaya, Navsari<br>Percentage: 81.5%</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="container">
-        <h2 class="section-header">Technical <span class="gradient-text">Skills</span></h2>
-        <div class="skills-container">
-            <div class="glass-panel skill-category">
-                <h3>Programming & Data</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Python</span><span class="skill-tag">SQL</span><span class="skill-tag">JavaScript</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">Pandas</span><span class="skill-tag">NumPy</span>
-                </div>
-            </div>
-            <div class="glass-panel skill-category">
-                <h3>Machine Learning</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Machine Learning</span><span class="skill-tag">Deep Learning</span><span class="skill-tag">Generative AI</span><span class="skill-tag">NLP</span><span class="skill-tag">Computer Vision</span><span class="skill-tag">RAG Systems</span><span class="skill-tag">CNNs</span><span class="skill-tag">YOLO</span>
-                </div>
-            </div>
-            <div class="glass-panel skill-category">
-                <h3>Libraries & Tools</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">TensorFlow</span><span class="skill-tag">Scikit-Learn</span><span class="skill-tag">LangChain</span><span class="skill-tag">FAISS</span><span class="skill-tag">Git/GitHub</span><span class="skill-tag">REST APIs</span>
-                </div>
-            </div>
-            <div class="glass-panel skill-category">
-                <h3>Deployment</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">FastAPI</span><span class="skill-tag">Streamlit</span><span class="skill-tag">Docker</span><span class="skill-tag">Railway</span><span class="skill-tag">Render</span><span class="skill-tag">Google Colab</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="container">
-        <h2 class="section-header">Professional <span class="gradient-text">Projects</span></h2>
+    <!-- ================= 1. HERO SECTION (PERFECTLY CENTERED & EXACT DEMO SCANNER) ================= -->
+    <section class="min-h-[calc(100vh-80px)] lg:h-[calc(100vh-80px)] flex items-center justify-center relative bg-[radial-gradient(circle_at_20%_50%,rgba(0,242,254,0.08),transparent_40%)]">
         
-        <h3 class="subsection-header">Machine Learning & Computer Vision</h3>
-        <div class="projects-grid">
-
-            <div class="glass-panel project-card">
-                <div class="project-badge">Completed</div>
-                <!-- Manual Photo Folder Mapping: Data Prefix -->
-                <div class="project-slider-container" data-prefix="images/heartcare"></div>
-                <h3 class="project-title">HeartCare-AI</h3>
-                <p class="project-desc">Trained a predictive Machine Learning model for early heart disease detection and deployed it as a real-time web application via FastAPI.</p>
-                <div class="project-tech"><span>Python</span><span>Scikit-learn</span><span>Pandas</span><span>FastAPI</span></div>
-                <div class="project-actions" style="margin-top: 1rem;">
-                    <a href="https://heartcare-ai-jwy4.onrender.com" class="btn btn-primary btn-sm" target="_blank">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        Live Demo
-                    </a>
-                    <a href="https://github.com/Dk76-76/HeartCare-AI" target="_blank" class="btn btn-secondary btn-sm">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        Source Code
-                    </a>
+        <div class="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12 z-10 py-8 md:py-0">
+            <!-- Left Text Content -->
+            <div class="w-full md:w-3/5">
+                <!-- System Status Tag -->
+                <div class="font-mono-tech text-[--accent] text-xs mb-6 uppercase inline-flex items-center gap-2 bg-[--accent]/10 px-3 py-1.5 rounded-full border border-[--accent]/20">
+                    <span class="w-2 h-2 bg-[--accent] rounded-full animate-ping"></span> System Online
                 </div>
-            </div>
-
-            <div class="glass-panel project-card">
-                <div class="project-badge">Completed</div>
-                <div class="project-slider-container" data-prefix="images/vehicle"></div>
-                <h3 class="project-title">Vehicle Damage Classification</h3>
-                <p class="project-desc">Developed a Convolutional Neural Network (CNN) using TensorFlow to automate vehicle damage detection from images, improving inspection speed and accuracy.</p>
-                <div class="project-tech"><span>TensorFlow</span><span>CNN</span><span>YOLO</span><span>Computer Vision</span></div>
-                <div class="project-actions" style="margin-top: 1rem;">
-                    <a href="https://vehicle-damage-classification.onrender.com" class="btn btn-primary btn-sm" target="_blank">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        Live Demo
-                    </a>
-                    <a href="https://github.com/Dk76-76/vehicle-damage-classification" target="_blank" class="btn btn-secondary btn-sm">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        Source Code
-                    </a>
-                </div>
-            </div>
-
-            <div class="glass-panel project-card">
-                <div class="project-badge">Completed</div>
-                <div class="project-slider-container" data-prefix="images/movie"></div>
-                <h3 class="project-title">Movie Recommendation System</h3>
-                <p class="project-desc">Built a content-based recommendation engine using TF-IDF and Cosine Similarity with TMDB API integration, deployed via FastAPI for real-time personalized movie suggestions.</p>
-                <div class="project-tech"><span>FastAPI</span><span>TF-IDF</span><span>Cosine Similarity</span><span>TMDB API</span></div>
-                <div class="project-actions" style="margin-top: 1rem;">
-                    <a href="https://moviemind-98kj.onrender.com" class="btn btn-primary btn-sm" target="_blank">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        Live Demo
-                    </a>
-                    <a href="https://github.com/Dk76-76/MovieMind" target="_blank" class="btn btn-secondary btn-sm">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        Source Code
-                    </a>
-                </div>
-            </div>
-
-            <div class="glass-panel project-card">
-                <div class="project-badge">Completed</div>
-                <div class="project-slider-container" data-prefix="images/emotion"></div>
-                <h3 class="project-title">EmotionAI</h3>
-                <p class="project-desc">Real-time AI facial expression and emotion intelligence mapping facial landmarks to emotional states using deep learning.</p>
-                <div class="project-tech"><span>Python</span><span>Computer Vision</span><span>Deep Learning</span></div>
-                <div class="project-actions" style="margin-top: 1rem;">
-                    <a href="https://emotionai-2-anrd.onrender.com" class="btn btn-primary btn-sm" target="_blank">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        Live Demo
-                    </a>
-                    <a href="https://github.com/Dk76-76/EmotionAI" target="_blank" class="btn btn-secondary btn-sm">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        Source Code
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        <h3 class="subsection-header" style="margin-top: 5rem;">Generative AI & NLP</h3>
-        <div class="projects-grid">
-            
-            <div class="glass-panel project-card">
-                <div class="project-badge">Completed</div>
-                <div class="project-slider-container" data-prefix="images/resume"></div>
-                <h3 class="project-title">Resume Information Extractor</h3>
-                <p class="project-desc">Engineered a Generative AI tool to parse and structure key data points from unstructured PDFs, automating data entry in recruitment workflows.</p>
-                <div class="project-tech"><span>NLP</span><span>Generative AI</span><span>LangChain</span><span>FAISS</span></div>
-                <div class="project-actions" style="margin-top: 1rem;">
-                    <a href="https://resume-information-extractor-1-2tjd.onrender.com" class="btn btn-primary btn-sm" target="_blank">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        Live Demo
-                    </a>
-                    <a href="https://github.com/Dk76-76/resume-information-extractor" target="_blank" class="btn btn-secondary btn-sm">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        Source Code
-                    </a>
-                </div>
-            </div>
-
-            <!-- Pending Project -->
-            <div class="glass-panel project-card">
-                <div class="project-slider-container" data-prefix="images/carservice"></div>
                 
-                <div class="project-badge pending">In Progress</div>
-                <h3 class="project-title">AI Car Service Intelligence</h3>
-                <p class="project-desc">Currently developing a hybrid system incorporating Computer Vision for automated vehicle inspections and a RAG-based assistant for customer support workflows based on manuals.</p>
-                <div class="project-tech">
-                    <span>Computer Vision</span><span>RAG</span><span>AI Agents</span><span>FastAPI</span>
+                <!-- Main Name -->
+                <h1 class="text-6xl md:text-8xl font-black mb-2 tracking-tighter leading-none">
+                    Devendar<br><span class="gradient-text">Kumavat.</span>
+                </h1>
+                
+                <!-- Gen AI & ML Engineer Main Heading -->
+                <h2 class="text-2xl md:text-3xl font-mono-tech font-bold text-[--accent] mb-6 tracking-wide drop-shadow-[0_0_10px_rgba(0,242,254,0.3)]">
+                    > Generative AI & ML Engineer
+                </h2>
+                
+                <!-- Typewriter -->
+                <div class="h-8 mb-6"><span id="tw-1" class="typewriter text-xl font-light text-gray-300"></span></div>
+
+                <p class="text-gray-400 text-lg mb-10 max-w-xl leading-relaxed">
+                    Bridging the gap between mathematical algorithms and scalable applications. Specializing in <strong>RAG Pipelines, Computer Vision (YOLOv8)</strong>, and robust backends.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 font-mono-tech text-sm">
+                    <a href="#projects" class="bg-[--accent] text-black px-6 py-3.5 rounded font-bold shadow-[0_0_20px_rgba(0,242,254,0.3)] hover:scale-105 transition-all inline-block text-decoration-none">> View_Portfolio()</a>
+                    <a href="DK_Resume.pdf" download class="border border-white/20 text-white bg-white/5 px-6 py-3.5 rounded hover:border-[--accent] hover:text-[--accent] transition-colors inline-block text-decoration-none">DK_Resume.pdf</a>
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- GitHub Stats Section -->
-    <section id="github-stats" class="container">
-        <h2 class="section-header">GitHub <span class="gradient-text">Statistics</span></h2>
-        <div class="gh-stats-wrapper">
-            <div class="gh-stats-grid">
-                <img src="https://github-readme-streak-stats.herokuapp.com/?user=Dk76-76&theme=radical&hide_border=true&background=050507&ring=00f2fe&fire=4facfe&currStreakLabel=4facfe&sideNums=ffffff&sideLabels=a0a0b0&dates=a0a0b0" class="gh-stat-card" style="max-width: 550px;" alt="GitHub Streak">
-            </div>
-            
-            <div class="gh-stat-wide">
-                <p style="color: var(--text-secondary); font-family: var(--font-mono); margin-bottom: 1.5rem; font-size: 0.9rem; letter-spacing: 1px;">CONTRIBUTION ACTIVITY</p>
-                <img src="https://ghchart.rshah.org/4facfe/Dk76-76" alt="GitHub Contribution Graph" style="width: 100%; min-width: 650px;">
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="container" style="margin-top: 2rem;">
-        <div class="glass-panel contact-content" style="padding: 4rem 2rem;">
-            <h2 class="section-header" style="margin-bottom: 0.5rem; margin-top: 0;">Let's <span class="gradient-text">Connect</span></h2>
-            <p class="hero-desc" style="margin: 0 auto;">Open to AI/ML opportunities, internships, collaborations and interesting technical challenges. Based in Navsari, Gujarat and Open to Relocation.</p>
-            
-            <div class="contact-info">
-                <a href="mailto:kumavatbdevendar@gmail.com" class="contact-item">
-                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    <span>Email Me</span>
-                </a>
-                <a href="https://www.linkedin.com/in/devendar-kumavat-ai/" target="_blank" class="contact-item">
-                    <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-1.85 0-2.58 1-3 1.68v-1.42h-2.6v9.3h2.6v-4.8c0-.98.37-2.3 1.83-2.3 1.54 0 1.54 1.5 1.54 2.37v4.7h2.6M7.8 7.3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-1.3 11.2h2.6v-9.3H6.5v9.3z"/></svg>
-                    <span>LinkedIn</span>
-                </a>
-                <a href="https://github.com/Dk76-76" target="_blank" class="contact-item">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                    <span>GitHub</span>
-                </a>
-                <div class="contact-item">
-                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    <span>+91 7600765359</span>
+            <!-- Right Dynamic Scanner -->
+            <div class="w-full md:w-2/5 flex justify-center relative">
+                <!-- Cyan Spinning Rings -->
+                <div class="absolute inset-0 m-auto w-[360px] h-[360px] border border-[--accent]/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                <div class="absolute inset-0 m-auto w-[340px] h-[340px] border border-dashed border-[--accent]/40 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                
+                <!-- Profile Image & Scanner -->
+                <div class="relative w-[300px] h-[380px] rounded-[2rem] overflow-hidden shadow-[0_0_50px_rgba(0,242,254,0.15)] bg-black z-10 ident-box cursor-pointer border border-[--accent]/30">
+                    <img src="profile.png" alt="Devendar Kumavat" class="absolute inset-0 w-full h-full object-cover grayscale opacity-30">
+                    
+                    <div class="color-wipe">
+                        <img src="profile.png" alt="Devendar Kumavat" class="w-[300px] h-[380px] max-w-none max-h-none object-cover">
+                        <div class="scanner-beam"></div>
+                    </div>
+                    
+                    <div class="bb-tl"></div><div class="bb-tr"></div>
+                    <div class="bb-bl"></div><div class="bb-br"></div>
+                    
+                    <!-- Dynamic HUD Element -->
+                    <div class="absolute bottom-6 left-6 z-30 font-mono-tech text-[10px] bg-black/85 backdrop-blur px-3 py-2.5 rounded border-l-2 border-[--accent] min-w-[190px] shadow-2xl">
+                        <div id="hud-1" class="text-[--accent] font-bold tracking-wider leading-relaxed text-left">
+                            [SYSTEM_BOOTING...]<br>AWAITING_DATA
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>Designed & Developed by Devendar Kumavat | Navsari, Gujarat</p>
+    <!-- ================= 2. ABOUT ME SECTION ================= -->
+    <section id="about" class="section-wrapper relative bg-[#020203]">
+        <div class="max-w-7xl mx-auto px-6 relative z-10 py-10">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                
+                <!-- Left: The Story -->
+                <div class="w-full lg:w-1/2">
+                    <h2 class="text-[--accent] font-mono-tech text-sm tracking-widest mb-2">> MY_MISSION</h2>
+                    <h3 class="text-5xl md:text-6xl font-black tracking-tight mb-8">About <span class="gradient-text">Me.</span></h3>
+                    
+                    <p class="text-gray-400 text-lg md:text-xl leading-relaxed font-light">
+                        I am an <span class="highlight-white">AI & ML Engineer</span> passionate about transforming complex data into robust solutions. By leveraging <span class="highlight-cyan">Generative AI</span> and <span class="highlight-cyan">Deep Learning</span>, I bridge the gap between algorithmic research and production-ready applications.
+                    </p>
+                </div>
+
+                <!-- Right: The Modules With Slide Hover Animation -->
+                <div class="w-full lg:w-1/2 flex flex-col gap-6">
+                    <div class="about-module-card">
+                        <div class="text-2xl mt-1">🧠</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-1">The Core Focus</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed">Developing scalable applications using <span class="highlight-cyan">TensorFlow</span> and <span class="highlight-cyan">Python</span>.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-module-card">
+                        <div class="text-2xl mt-1">⚙️</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-1">The Execution</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed">Building <span class="highlight-cyan">Computer Vision</span> models and seamlessly deploying them via <span class="highlight-white font-mono-tech text-xs">FastAPI & Docker</span>.</p>
+                        </div>
+                    </div>
+
+                    <div class="about-module-card">
+                        <div class="text-2xl mt-1">🎯</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-1">The Mission</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed">Leveraging data-driven architectures to solve complex, <span class="highlight-cyan">real-world challenges</span>.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- PRO TELEMETRY METRICS STRIP (Suggested Professional Addition) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-12 border-t border-white/5">
+                <div class="metric-card">
+                    <div class="font-mono-tech text-3xl md:text-4xl font-black text-[--accent] mb-1">06+</div>
+                    <div class="font-mono-tech text-[11px] text-white uppercase tracking-wider">Live AI Deployments</div>
+                    <div class="text-[11px] text-gray-500 mt-1">Hosted on Render & Cloud</div>
+                </div>
+                <div class="metric-card">
+                    <div class="font-mono-tech text-3xl md:text-4xl font-black text-white mb-1">08+</div>
+                    <div class="font-mono-tech text-[11px] text-[--accent] uppercase tracking-wider">ML & CV Architectures</div>
+                    <div class="text-[11px] text-gray-500 mt-1">CNN, YOLOv8, RAG & NLP</div>
+                </div>
+                <div class="metric-card">
+                    <div class="font-mono-tech text-3xl md:text-4xl font-black text-[--accent] mb-1">REST</div>
+                    <div class="font-mono-tech text-[11px] text-white uppercase tracking-wider">FastAPI Microservices</div>
+                    <div class="text-[11px] text-gray-500 mt-1">Dockerized Production Ready</div>
+                </div>
+                <div class="metric-card">
+                    <div class="font-mono-tech text-3xl md:text-4xl font-black text-white mb-1">IIT-P</div>
+                    <div class="font-mono-tech text-[11px] text-[--accent] uppercase tracking-wider"> & Masai Certified</div>
+                    <div class="text-[11px] text-gray-500 mt-1">Gen AI & ML Engineering</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 3. SKILLS SECTION ================= -->
+    <section id="skills" class="section-wrapper border-t border-[rgba(0,242,254,0.1)]">
+        <!-- THE INFINITE SCROLLING BACKGROUND -->
+        <div class="marquee-container">
+            <div class="marquee-track">
+                TENSORFLOW • FASTAPI • LANGCHAIN • DOCKER • PYTHON • YOLOv8 • FAISS • SQL • RENDER •
+                TENSORFLOW • FASTAPI • LANGCHAIN • DOCKER • PYTHON • YOLOv8 • FAISS • SQL • RENDER •
+            </div>
+            <div class="marquee-track reverse">
+                MACHINE LEARNING • GENERATIVE AI • COMPUTER VISION • NLP • RAG SYSTEMS • 
+                MACHINE LEARNING • GENERATIVE AI • COMPUTER VISION • NLP • RAG SYSTEMS •
+            </div>
+            <div class="marquee-track">
+                SCIKIT-LEARN • OPENCV • PANDAS • STREAMLIT • NUMPY • REST APIS • GITHUB •
+                SCIKIT-LEARN • OPENCV • PANDAS • STREAMLIT • NUMPY • REST APIS • GITHUB •
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 pt-10">
+            <!-- Left Aligned Heading -->
+            <div class="mb-16">
+                <h2 class="text-[--accent] font-mono-tech text-sm tracking-widest mb-2">> TECH_STACK</h2>
+                <h3 class="text-4xl md:text-5xl font-black tracking-tight">The <span class="gradient-text">Arsenal.</span></h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1: AI / ML -->
+                <div class="v1-card group">
+                    <div class="flex items-center gap-4 mb-6 border-b border-white/5 pb-4">
+                        <div class="text-3xl">🧠</div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white">Machine Learning & CV</h4>
+                            <p class="text-[10px] font-mono-tech text-[--accent] mt-1">> Predictive Models & Vision</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/tensorflow/d1d5db" class="tech-icon" alt="TF"> TensorFlow
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/scikitlearn/d1d5db" class="tech-icon" alt="Sklearn"> Scikit-Learn
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> YOLOv8
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> Computer Vision
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="6.5"/></svg> Deep Learning & CNNs
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/pandas/d1d5db" class="tech-icon" alt="Pandas"> Pandas
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/numpy/d1d5db" class="tech-icon" alt="NumPy"> NumPy
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/opencv/d1d5db" class="tech-icon" alt="OpenCV"> OpenCV
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Gen AI -->
+                <div class="v1-card group">
+                    <div class="flex items-center gap-4 mb-6 border-b border-white/5 pb-4">
+                        <div class="text-3xl">⚡</div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white">Generative AI & NLP</h4>
+                            <p class="text-[10px] font-mono-tech text-[--accent] mt-1">> LLMs & Semantic Search</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/langchain/d1d5db" class="tech-icon" alt="LangChain"> LangChain
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> FAISS / Vector DBs
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> RAG Systems
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg> NLP
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> LLMs
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Prompt Eng.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Backend -->
+                <div class="v1-card group">
+                    <div class="flex items-center gap-4 mb-6 border-b border-white/5 pb-4">
+                        <div class="text-3xl">⚙️</div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white">Engineering & Deploy</h4>
+                            <p class="text-[10px] font-mono-tech text-[--accent] mt-1">> Backend & Production</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/fastapi/d1d5db" class="tech-icon" alt="FastAPI"> FastAPI
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/streamlit/d1d5db" class="tech-icon" alt="Streamlit"> Streamlit
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/python/d1d5db" class="tech-icon" alt="Python"> Python
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/docker/d1d5db" class="tech-icon" alt="Docker"> Docker
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/github/d1d5db" class="tech-icon" alt="GitHub"> Git & GitHub
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/render/d1d5db" class="tech-icon" alt="Render"> Render
+                        </div>
+                        <div class="v1-tag">
+                            <svg class="generic-svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg> REST API
+                        </div>
+                        <div class="v1-tag">
+                            <img src="https://cdn.simpleicons.org/postgresql/d1d5db" class="tech-icon" alt="SQL"> SQL
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 4. PROJECTS SECTION ================= -->
+    <section id="projects" class="section-wrapper border-t border-[rgba(0,242,254,0.1)]">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <!-- Left Aligned Heading -->
+            <div class="mb-16">
+                <h2 class="text-[--accent] font-mono-tech text-sm tracking-widest mb-2">> PORTFOLIO_EXECUTION</h2>
+                <h3 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Selected <span class="gradient-text">Works.</span></h3>
+                <p class="text-gray-400 max-w-2xl text-sm">Real-world implementations of Computer Vision, Generative AI, and Predictive Machine Learning models deployed via robust backends.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-16">
+                
+                <!-- ================= PROJECT 1: COVID-19 X-Ray ================= -->
+                <div class="project-card completed-card group">
+                    <div class="project-slider-container" data-prefix="images/covid">
+                        <div class="status-badge">DEPLOYED</div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold mb-3 text-white">COVID-19 X-Ray Classifier</h4>
+                        <p class="text-gray-400 text-sm mb-5 flex-grow leading-relaxed">Developed a Convolutional Neural Network (CNN) model trained on chest X-ray datasets to detect COVID-19 with high diagnostic accuracy.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="skill-tag"><span class="skill-dot"></span>TensorFlow</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>CNN</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>Computer Vision</span>
+                        </div>
+                        
+                        <div class="flex gap-3 mt-auto">
+                            <a href="https://covid19-xray-classification.onrender.com" target="_blank" class="btn-action btn-cyan-primary">
+                                Live Demo
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                            </a>
+                            <a href="https://github.com/Dk76-76/covid19-xray-classification" target="_blank" class="btn-action btn-cyan-secondary">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PROJECT 2: Vehicle Damage ================= -->
+                <div class="project-card completed-card group">
+                    <div class="project-slider-container" data-prefix="images/vehicle">
+                        <div class="status-badge">DEPLOYED</div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold mb-3 text-white">Vehicle Damage Classifier</h4>
+                        <p class="text-gray-400 text-sm mb-5 flex-grow leading-relaxed">Automated vehicle damage detection using Convolutional Neural Networks (CNN) from images to improve inspection speed.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="skill-tag"><span class="skill-dot"></span>TensorFlow</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>CNN</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>YOLOv8</span>
+                        </div>
+                        
+                        <div class="flex gap-3 mt-auto">
+                            <a href="https://vehicle-damage-classification.onrender.com" target="_blank" class="btn-action btn-cyan-primary">
+                                Live Demo
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                            </a>
+                            <a href="https://github.com/Dk76-76/vehicle-damage-classification" target="_blank" class="btn-action btn-cyan-secondary">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PROJECT 3: Resume Extractor ================= -->
+                <div class="project-card completed-card group">
+                    <div class="project-slider-container" data-prefix="images/resume">
+                        <div class="status-badge">DEPLOYED</div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold mb-3 text-white">Resume Info Extractor</h4>
+                        <p class="text-gray-400 text-sm mb-5 flex-grow leading-relaxed">Generative AI pipeline to parse, analyze, and structure key data points from unstructured PDFs for recruitment workflows.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="skill-tag"><span class="skill-dot"></span>LangChain</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>FAISS</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>GenAI</span>
+                        </div>
+                        
+                        <div class="flex gap-3 mt-auto">
+                            <a href="https://resume-information-extractor-1-2tjd.onrender.com" target="_blank" class="btn-action btn-cyan-primary">
+                                Live Demo
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                            </a>
+                            <a href="https://github.com/Dk76-76/resume-information-extractor" target="_blank" class="btn-action btn-cyan-secondary">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PROJECT 4: HeartCare AI ================= -->
+                <div class="project-card completed-card group">
+                    <div class="project-slider-container" data-prefix="images/heartcare">
+                        <div class="status-badge">DEPLOYED</div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold mb-3 text-white">HeartCare-AI Predictive</h4>
+                        <p class="text-gray-400 text-sm mb-5 flex-grow leading-relaxed">Trained a predictive Machine Learning model for early heart disease detection, deployed as a real-time web application.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="skill-tag"><span class="skill-dot"></span>Scikit-learn</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>FastAPI</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>Pandas</span>
+                        </div>
+                        
+                        <div class="flex gap-3 mt-auto">
+                            <a href="https://heartcare-ai-jwy4.onrender.com" target="_blank" class="btn-action btn-cyan-primary">
+                                Live Demo
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                            </a>
+                            <a href="https://github.com/Dk76-76/HeartCare-AI" target="_blank" class="btn-action btn-cyan-secondary">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PROJECT 5: MovieMind ================= -->
+                <div class="project-card completed-card group">
+                    <div class="project-slider-container" data-prefix="images/movie">
+                        <div class="status-badge">DEPLOYED</div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold mb-3 text-white">MovieMind Recommendation</h4>
+                        <p class="text-gray-400 text-sm mb-5 flex-grow leading-relaxed">Built a content-based movie recommendation engine using TF-IDF and Cosine Similarity with TMDB API integration via FastAPI.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="skill-tag"><span class="skill-dot"></span>FastAPI</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>TF-IDF</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>TMDB API</span>
+                        </div>
+                        
+                        <div class="flex gap-3 mt-auto">
+                            <a href="https://moviemind-98kj.onrender.com" target="_blank" class="btn-action btn-cyan-primary">
+                                Live Demo
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                            </a>
+                            <a href="https://github.com/Dk76-76/MovieMind" target="_blank" class="btn-action btn-cyan-secondary">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PROJECT 6: EmotionAI ================= -->
+                <div class="project-card completed-card group">
+                    <div class="project-slider-container" data-prefix="images/emotion">
+                        <div class="status-badge">DEPLOYED</div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold mb-3 text-white">EmotionAI Classification</h4>
+                        <p class="text-gray-400 text-sm mb-5 flex-grow leading-relaxed">Real-time facial expression and emotion intelligence model mapping facial landmarks to emotional states using deep learning.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="skill-tag"><span class="skill-dot"></span>Deep Learning</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>OpenCV</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>Flask</span>
+                        </div>
+                        
+                        <div class="flex gap-3 mt-auto">
+                            <a href="https://emotionai-2-anrd.onrender.com" target="_blank" class="btn-action btn-cyan-primary">
+                                Live Demo
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                            </a>
+                            <a href="https://github.com/Dk76-76/EmotionAI" target="_blank" class="btn-action btn-cyan-secondary">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PROJECT 7: Flipkart Order Intelligence ================= -->
+                <div class="project-card stealth-card group">
+                    <div class="project-slider-container" data-prefix="images/flipkart">
+                        <div class="status-badge">CODE READY</div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold mb-3 text-white">Flipkart Order Intelligence</h4>
+                        <p class="text-gray-400 text-sm mb-5 flex-grow leading-relaxed">Data-driven e-commerce order analytics and predictive intelligence system designed to optimize order fulfillment and insights.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="skill-tag"><span class="skill-dot"></span>Python</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>Machine Learning</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>Data Analytics</span>
+                        </div>
+
+                        <div class="flex gap-3 mt-auto">
+                            <a href="https://github.com/Dk76-76/flipkart-order-intelligence" target="_blank" class="btn-action btn-stealth">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                View GitHub Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PROJECT 8: PENDING ================= -->
+                <div class="project-card stealth-card group">
+                    <div class="project-slider-container" data-prefix="images/carservice">
+                        <!-- Grayscale Filter overlay for Stealth look -->
+                        <div class="absolute inset-0 backdrop-grayscale backdrop-brightness-50 pointer-events-none z-10 mix-blend-overlay"></div>
+                        <div class="status-badge">IN LAB / TRAINING</div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold mb-3 text-white">Enterprise Car Service AI</h4>
+                        
+                        <!-- CUSTOM QUOTE -->
+                        <div class="bg-white/5 border border-white/10 rounded p-3 mb-4">
+                            <p class="text-gray-400 text-xs italic">"Currently training a massive dataset. Good things take time, compute power, and a lot of coffee."</p>
+                        </div>
+                        
+                        <!-- Silver Skill Tags -->
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="skill-tag"><span class="skill-dot"></span>VectorDB</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>RAG Pipelines</span>
+                            <span class="skill-tag"><span class="skill-dot"></span>AI Agents</span>
+                        </div>
+
+                        <!-- Silver Progress Bar With New Animation -->
+                        <div class="mb-5 w-full mt-auto">
+                            <div class="flex justify-between font-mono-tech text-[9px] text-gray-400 mb-1.5">
+                                <span>Core Logic & Embeddings</span> <span>65%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                <div class="progress-silver" style="--target-width: 65%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <a href="#contact" class="btn-action btn-stealth">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                View Architecture Setup
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sleek GitHub Repository Explorer Banner -->
+            <div class="mt-16 metric-card flex flex-col md:flex-row items-center justify-between gap-6 px-8 py-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-[--accent]/10 border border-[--accent]/30 flex items-center justify-center text-[--accent]">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-lg">> Explore Complete Codebase & Notebooks</h4>
+                        <p class="text-gray-400 text-xs font-mono-tech">Check out all open-source repositories, Dockerfiles, and training scripts on GitHub.</p>
+                    </div>
+                </div>
+                <a href="https://github.com/Dk76-76" target="_blank" class="bg-[--accent]/10 border border-[--accent] text-[--accent] font-mono-tech text-xs font-bold px-6 py-3 rounded-lg hover:bg-[--accent] hover:text-black transition-all whitespace-nowrap">
+                    > github.com/Dk76-76
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 5. EDUCATION SECTION ================= -->
+    <section id="education" class="section-wrapper bg-[#020202]">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <!-- Left Aligned Heading -->
+            <div class="mb-12">
+                <h2 class="text-[--accent] font-mono-tech text-sm tracking-widest mb-2">> KNOWLEDGE_BASE</h2>
+                <h3 class="text-4xl md:text-5xl font-black tracking-tight">Academic <span class="gradient-text">Profile.</span></h3>
+            </div>
+            
+            <div class="v3-grid">
+                
+                <!-- ================= 1. MASAI CARD ================= -->
+                <div class="edu-card v3-large group !overflow-visible" style="background: linear-gradient(135deg, rgba(0,242,254,0.03) 0%, rgba(10,10,15,0.9) 100%);">
+                    <div class="flex flex-col md:flex-row justify-between gap-8 h-full">
+                        <div class="flex-1 flex flex-col justify-center">
+                            <div class="v3-badge bg-[--accent]/10 text-[--accent] border border-[--accent]/30 mb-4 w-max">2025 - Present</div>
+                            <h4 class="text-3xl font-bold text-white mb-2">Gen AI & Machine Learning Engineering</h4>
+                            <h5 class="text-lg text-[--accent] font-bold mb-5 border-l-2 border-[--accent] pl-3">Masai School & IIT Patna</h5>
+                            
+                            <p class="text-gray-400 text-sm max-w-3xl leading-relaxed mb-6">A rigorous, industry-aligned professional training program focused on advanced Data Science, predictive ML models, and deploying Generative AI architectures.</p>
+                            
+                            <div class="flex flex-wrap items-center gap-6 mt-auto">
+                                <div class="stat-box">
+                                    <span class="stat-value">6.23</span>
+                                    <span class="stat-label">Current CGPA</span>
+                                </div>
+                                
+                                <!-- Hologram Button for Masai -->
+                                <a href="certificates/masai_cert.jpeg" target="_blank" class="tooltip-btn primary-btn h-full">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    HOVER_TO_PREVIEW
+                                    <img src="certificates/masai_cert.jpeg" class="tooltip-img" alt="Masai Certificate Preview">
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hidden md:flex flex-col items-end justify-center pr-4">
+                            <div class="w-32 h-32 rounded-full border border-[--accent]/20 flex items-center justify-center relative shadow-[0_0_30px_rgba(0,242,254,0.05)]">
+                                <div class="absolute inset-0 border-2 border-t-[--accent] border-transparent rounded-full animate-spin" style="animation-duration: 3s;"></div>
+                                <div class="absolute inset-2 border border-b-[--accent]/50 border-transparent rounded-full animate-spin" style="animation-duration: 4s; animation-direction: reverse;"></div>
+                                <div class="text-4xl filter drop-shadow-[0_0_10px_rgba(0,242,254,0.3)]">🎓</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 2. BCA CARD ================= -->
+                <div class="edu-card group flex flex-col h-full !overflow-visible" style="padding: 1.5rem; background: linear-gradient(180deg, rgba(10,10,15,0.8) 0%, rgba(0,242,254,0.04) 100%); border-top: 1px solid rgba(0,242,254,0.1);">
+                    <div class="v3-badge bg-[--accent]/10 text-[--accent] border border-[--accent]/20 mb-4 self-start">Graduated</div>
+                    <h4 class="text-lg font-bold text-white mb-1 flex items-center gap-2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        B.C.A.
+                    </h4>
+                    <h5 class="text-xs text-gray-400 mb-4 font-mono-tech">> S. S. Agrawal College</h5>
+                    
+                    <div class="pt-4 border-t border-[--accent]/10 h-full flex flex-col justify-end">
+                        <div class="flex justify-between items-end mb-4">
+                            <span class="text-gray-400 text-xs uppercase tracking-widest">Degree CGPA</span>
+                            <span class="font-mono-tech text-xl font-black text-white drop-shadow-[0_0_8px_rgba(0,242,254,0.3)]">7.84</span>
+                        </div>
+                        
+                        <!-- Colored Hologram Button for BCA -->
+                        <a href="certificates/bca_cert.jpeg" target="_blank" class="tooltip-btn mt-auto" style="background: rgba(0,242,254,0.05); border-color: rgba(0,242,254,0.3); color: var(--accent);">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            HOVER_TO_PREVIEW
+                            <img src="certificates/bca_cert.jpeg" class="tooltip-img" alt="BCA Degree Preview">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ================= 3. 12TH COMMERCE CARD ================= -->
+                <div class="edu-card group flex flex-col h-full !overflow-visible" style="padding: 1.5rem; background: linear-gradient(180deg, rgba(10,10,15,0.8) 0%, rgba(0,242,254,0.04) 100%); border-top: 1px solid rgba(0,242,254,0.1);">
+                    <div class="v3-badge bg-[--accent]/10 text-[--accent] border border-[--accent]/20 mb-4 self-start">Completed</div>
+                    <h4 class="text-lg font-bold text-white mb-1 flex items-center gap-2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        12th Commerce
+                    </h4>
+                    <h5 class="text-xs text-gray-400 mb-4 font-mono-tech">> Seth P.H. Vidyalaya</h5>
+                    
+                    <div class="pt-4 border-t border-[--accent]/10 h-full flex flex-col justify-end">
+                        <div class="flex justify-between items-end mb-4">
+                            <span class="text-gray-400 text-xs uppercase tracking-widest">Final Percentage</span>
+                            <span class="font-mono-tech text-xl font-black text-white drop-shadow-[0_0_8px_rgba(0,242,254,0.3)]">81.5%</span>
+                        </div>
+                        
+                        <!-- Colored Hologram Button for 12th -->
+                        <a href="certificates/12th_cert.jpeg" target="_blank" class="tooltip-btn mt-auto" style="background: rgba(0,242,254,0.05); border-color: rgba(0,242,254,0.3); color: var(--accent);">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            HOVER_TO_PREVIEW
+                            <img src="certificates/12th_cert.jpeg" class="tooltip-img" alt="12th Marksheet Preview">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ================= 4. CONTINUOUS LEARNER CARD ================= -->
+                <div class="edu-card group flex flex-col items-center justify-start text-center h-full !overflow-visible" style="padding: 1.5rem; background: rgba(0,242,254,0.02); border-style: dashed; border-color: rgba(0,242,254,0.2);">
+                    <div class="font-mono-tech text-[--accent] text-4xl font-black mb-2 mt-2">></div>
+                    <div class="text-sm text-gray-300 font-mono-tech uppercase tracking-widest">Continuous</div>
+                    <div class="text-sm text-white font-mono-tech uppercase tracking-widest font-bold mb-4">Learner</div>
+                    
+                    <div class="terminal-box">
+                        <div class="text-gray-500 font-mono-tech text-[10px] mb-1">status: active</div>
+                        <div class="whitespace-nowrap flex items-center overflow-hidden">
+                            <span class="text-[--accent] font-mono-tech text-[11px] mr-2">> root@learning:~$</span>
+                            <span class="typewriter-text"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 6. CONTACT SECTION (LEFT ALIGNED HEADING & HOVER CARDS) ================= -->
+    <section id="contact" class="section-wrapper border-t border-[rgba(0,242,254,0.1)]">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Left Aligned Heading -->
+            <div class="mb-12">
+                <h2 class="text-[--accent] font-mono-tech text-sm tracking-widest mb-2">> ENDPOINT_REACHED</h2>
+                <h3 class="text-4xl md:text-5xl font-black tracking-tight">Initiate <span class="gradient-text">Contact.</span></h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                
+                <!-- LEFT SIDE: Clean Dashboard Vibe -->
+                <div class="md:col-span-5 flex flex-col gap-6">
+                    <div class="contact-glass-card p-8 h-full flex flex-col justify-between" style="background: linear-gradient(135deg, rgba(0,242,254,0.03) 0%, rgba(10,10,15,0.9) 100%);">
+                        <div>
+                            <h4 class="text-3xl font-bold text-white mb-2">Let's <span class="text-[--accent]">Connect</span></h4>
+                            <p class="text-gray-400 text-sm mb-8">System is ready. Reach out via direct nodes or use the AI terminal to transmit a payload.</p>
+                            
+                            <div class="space-y-4">
+                                <a href="mailto:kumavatbdevendar@gmail.com" class="contact-row">
+                                    <div class="contact-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] text-gray-500 font-mono-tech uppercase tracking-widest mb-0.5">Email Protocol</p>
+                                        <p class="text-sm text-gray-200">kumavatbdevendar@gmail.com</p>
+                                    </div>
+                                </a>
+                                
+                                <div class="contact-row">
+                                    <div class="contact-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] text-gray-500 font-mono-tech uppercase tracking-widest mb-0.5">Direct Line</p>
+                                        <p class="text-sm text-gray-200">+91 7600765359</p>
+                                    </div>
+                                </div>
+
+                                <div class="contact-row">
+                                    <div class="contact-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] text-gray-500 font-mono-tech uppercase tracking-widest mb-0.5">Base Location</p>
+                                        <p class="text-sm text-gray-200">Navsari, Gujarat, India</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 mt-8 pt-6 border-t border-white/10">
+                            <a href="https://github.com/Dk76-76" target="_blank" class="contact-icon hover:bg-[--accent] hover:text-black transition-all" style="border-radius: 50%;" title="GitHub">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            </a>
+                            <a href="https://www.linkedin.com/in/devendar-kumavat-ai/" target="_blank" class="contact-icon hover:bg-[--accent] hover:text-black transition-all" style="border-radius: 50%;" title="LinkedIn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            </a>
+                            <a href="DK_Resume.pdf" download class="bg-white/5 border border-white/10 text-white font-bold px-6 py-2.5 rounded-lg font-mono-tech text-xs ml-auto hover:bg-[--accent] hover:border-[--accent] hover:text-black transition-all inline-block text-center">
+                                > RESUME.PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE: Terminal Form -->
+                <div class="md:col-span-7 contact-glass-card flex flex-col p-0">
+                    
+                    <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-white/5">
+                        <div class="flex items-center gap-3">
+                            <div class="relative flex h-3 w-3">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[--accent] opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-3 w-3 bg-[--accent]"></span>
+                            </div>
+                            <span class="font-mono-tech text-xs text-white">DEV_AI_ASSISTANT v2.0</span>
+                        </div>
+                        <span class="font-mono-tech text-[10px] text-[--accent]">System: Ready</span>
+                    </div>
+
+                    <!-- STRICT FIXED HEIGHT Chat History -->
+                    <div id="chat-history" class="p-6 flex flex-col gap-4 overflow-y-auto scroll-smooth">
+                        <div id="chat-standby" class="font-mono-tech text-[10px] text-gray-500 text-center mt-auto mb-auto">
+                            [SYSTEM STANDBY... AWAITING CONNECTION]
+                        </div>
+                    </div>
+
+                    <!-- Compact AI Form -->
+                    <form id="ai-contact-form" class="ai-input-box mt-auto">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="user-name" class="ai-input" placeholder="> Enter Your Name..." required>
+                            <input type="email" id="user-email" class="ai-input" placeholder="> Enter Your Email..." required>
+                        </div>
+                        <textarea id="user-msg" class="ai-input h-20 resize-none" placeholder="> Type your payload message here..." required></textarea>
+                        
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="New Message from Portfolio!">
+                        
+                        <div class="flex justify-between items-center mt-2 border-t border-white/5 pt-4">
+                            <div class="font-mono-tech text-[10px] text-gray-500 flex items-center hidden md:flex">
+                                Waiting for input <div class="ml-2"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>
+                            </div>
+                            <button type="submit" id="submit-btn" class="bg-[--accent]/10 border border-[--accent] text-[--accent] font-bold px-8 py-2.5 rounded-lg font-mono-tech text-xs hover:bg-[--accent] hover:text-black transition-all flex items-center gap-2 w-full md:w-auto justify-center">
+                                <span>TRANSMIT_DATA</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PRO FOOTER ================= -->
+    <footer class="mt-20 bg-[#020202] border-t border-white/5 pt-16 pb-8 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-[--accent] to-transparent opacity-30"></div>
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] bg-[--accent] opacity-5 blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 border-b border-white/5 pb-12">
+                
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-[--accent] font-mono-tech text-2xl font-black">></span>
+                        <span class="text-white text-2xl font-black tracking-widest uppercase">Devendar.</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
+                        Generative AI & Machine Learning Engineering Student. Passionate about building intelligent data models and scalable backend architectures.
+                    </p>
+                    <a href="mailto:kumavatbdevendar@gmail.com" class="text-[--accent] font-mono-tech text-xs hover:underline">> kumavatbdevendar@gmail.com</a>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 font-mono-tech uppercase text-xs tracking-widest">Navigation</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#top" class="text-gray-400 hover:text-[--accent] transition-colors text-sm font-mono-tech footer-link"><span class="footer-arrow text-[--accent]">></span> Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-[--accent] transition-colors text-sm font-mono-tech footer-link"><span class="footer-arrow text-[--accent]">></span> About</a></li>
+                        <li><a href="#skills" class="text-gray-400 hover:text-[--accent] transition-colors text-sm font-mono-tech footer-link"><span class="footer-arrow text-[--accent]">></span> Skills</a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-[--accent] transition-colors text-sm font-mono-tech footer-link"><span class="footer-arrow text-[--accent]">></span> Projects</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 font-mono-tech uppercase text-xs tracking-widest">Connect</h4>
+                    <div class="flex flex-col gap-4">
+                        <a href="https://github.com/Dk76-76" target="_blank" class="group flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm">
+                            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-[--accent] transition-all"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13"></path></svg></div>
+                            GitHub
+                        </a>
+                        <a href="https://www.linkedin.com/in/devendar-kumavat-ai/" target="_blank" class="group flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm">
+                            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-[--accent] transition-all"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></div>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-xs font-mono-tech text-center md:text-left">
+                    © 2026. Designed & Engineered with <span class="text-[--accent]">☕</span> by Devendar.
+                </p>
+                
+                <a href="#top" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[--accent] hover:border-[--accent] hover:bg-[--accent]/10 transition-all" title="Back to Top">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                </a>
+            </div>
         </div>
     </footer>
 
-   <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // Mobile Menu Logic
-            const mobileBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            const navItems = document.querySelectorAll('.nav-links a');
-
-            mobileBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
+    <!-- ================= SCRIPTS ================= -->
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
+        }
 
-            navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    if(window.innerWidth <= 768) {
-                        navLinks.classList.remove('active');
-                    }
+        // --- 1. MOUSE TRACKING GLOW (Flashlight Effect Restored) ---
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.about-module-card, .v1-card, .project-card, .edu-card, .contact-glass-card, .metric-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
                 });
             });
+        });
 
-            // Scroll Reveal Animation
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('section').forEach(section => {
-                observer.observe(section);
-            });
+        // --- Typewriter Helper (For Hero) ---
+        function setupTypewriter(elementId, textArray) {
+            let tIdx = 0, cIdx = 0, isDeleting = false;
+            const el = document.getElementById(elementId);
+            if(!el) return;
             
-            // Dynamic Header Background
-            const nav = document.querySelector('nav');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    nav.style.background = 'rgba(5, 5, 7, 0.95)';
-                    nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.08)';
-                } else {
-                    nav.style.background = 'rgba(5, 5, 7, 0.85)';
-                    nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.08)';
+            function type() {
+                const currentText = textArray[tIdx];
+                if(isDeleting) { el.innerText = currentText.substring(0, cIdx-1); cIdx--; } 
+                else { el.innerText = currentText.substring(0, cIdx+1); cIdx++; }
+                let typingSpeed = isDeleting ? 30 : 80;
+                if(!isDeleting && cIdx === currentText.length) { typingSpeed = 2000; isDeleting = true; } 
+                else if(isDeleting && cIdx === 0) { isDeleting = false; tIdx = (tIdx + 1) % textArray.length; typingSpeed = 500; }
+                setTimeout(type, typingSpeed);
+            }
+            setTimeout(type, 1000);
+        }
+
+        // --- HUD Logic ---
+        function setupHUD(id, dataArray) {
+            const el = document.getElementById(id);
+            if(!el) return;
+            let idx = 0; el.innerHTML = dataArray[0];
+            setInterval(() => { el.classList.remove('hud-animate'); void el.offsetWidth; idx = (idx + 1) % dataArray.length; el.innerHTML = dataArray[idx]; el.classList.add('hud-animate'); }, 3500); 
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setupTypewriter('tw-1', ["I train YOLO & CNN models.", "I architect Generative AI & RAG.", "I deploy robust FastAPIs."]);
+            setupHUD('hud-1', ["[SCANNING_BIOMETRICS]<br><span class='text-white'>TARGET: DEVENDAR_K</span>", "FAST_API_SERVER:<br><span class='text-white'>[200_OK] RUNNING_SMOOTH</span>", "[LOCATION_DETECTED]<br><span class='text-white'>NAVSARI, GUJARAT, IN</span>", "[SKILLS_EXTRACTED]<br><span class='text-white'>CNN | YOLO | GEN_AI</span>", "[EDU_DATA_SYNCED]<br><span class='text-white'>MASAI_SCHOOL & IIT_PATNA</span>"]);
+        });
+
+        // --- SCROLL ANIMATION FOR AI ASSISTANT MESSAGES ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const contactSection = document.getElementById('contact');
+            const chatHistory = document.getElementById('chat-history');
+            let hasAnimated = false;
+
+            const observer = new IntersectionObserver((entries) => {
+                if(entries[0].isIntersecting && !hasAnimated) {
+                    hasAnimated = true;
+                    
+                    const messages = [
+                        "Scanning visitor profile... connection established.",
+                        "Hi! I am Devendar's virtual assistant.",
+                        "Enter your details below. I will route your message directly to his secure inbox."
+                    ];
+                    
+                    chatHistory.innerHTML = "";
+                    
+                    let i = 0;
+                    function showNextMessage() {
+                        if (i >= messages.length) return;
+                        
+                        const typingBubble = document.createElement('div');
+                        typingBubble.className = 'chat-bubble-animated show-bubble';
+                        typingBubble.innerHTML = `<span class="text-[--accent]">></span> <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>`;
+                        chatHistory.appendChild(typingBubble);
+                        chatHistory.scrollTop = chatHistory.scrollHeight;
+                        
+                        setTimeout(() => {
+                            chatHistory.removeChild(typingBubble);
+                            const msgBubble = document.createElement('div');
+                            msgBubble.className = 'chat-bubble-animated show-bubble';
+                            msgBubble.innerHTML = `<span class="text-[--accent]">></span> ${messages[i]}`;
+                            chatHistory.appendChild(msgBubble);
+                            chatHistory.scrollTop = chatHistory.scrollHeight;
+                            i++;
+                            setTimeout(showNextMessage, 1000 + Math.random() * 500);
+                        }, 1200);
+                    }
+                    
+                    setTimeout(showNextMessage, 500);
                 }
-            });
+            }, { threshold: 0.3 });
 
-            // --------------------------------------------------------
-            // SMART AUTO IMAGE SLIDER (Sync + Manual Controls + JPG/PNG)
-            // --------------------------------------------------------
+            if(contactSection && chatHistory) observer.observe(contactSection);
+        });
+
+        // Chat simulation & FormSubmit logic for form submission
+        const form = document.getElementById('ai-contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = submitBtn ? submitBtn.querySelector('span') : null;
+
+        function scrollToBottom() {
+            setTimeout(() => {
+                const chatHistory = document.getElementById('chat-history');
+                if(chatHistory) chatHistory.scrollTop = chatHistory.scrollHeight;
+            }, 50); 
+        }
+
+        if(form && submitBtn && btnText) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                const chatHistory = document.getElementById('chat-history');
+                
+                const userName = document.getElementById('user-name').value;
+                const userEmail = document.getElementById('user-email').value;
+                const userMsg = document.getElementById('user-msg').value;
+
+                btnText.innerText = "TRANSMITTING...";
+                submitBtn.style.opacity = "0.5";
+                submitBtn.style.pointerEvents = "none";
+
+                const userBubble = document.createElement('div');
+                userBubble.className = 'chat-bubble-animated user-msg show-bubble';
+                userBubble.innerHTML = `
+                    <div class="flex items-center justify-between mb-2 pb-1 border-b border-white/20 text-[10px] text-gray-300">
+                        <span class="font-bold text-[--accent]">${userName}</span>
+                        <span class="ml-4">${userEmail}</span>
+                    </div>
+                    <div class="text-sm">${userMsg}</div>
+                `;
+                chatHistory.appendChild(userBubble);
+                scrollToBottom();
+
+                setTimeout(() => {
+                    const procBubble = document.createElement('div');
+                    procBubble.className = 'chat-bubble-animated show-bubble';
+                    procBubble.innerHTML = `<span class="text-[--accent]">></span> Processing payload <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>`;
+                    chatHistory.appendChild(procBubble);
+                    scrollToBottom();
+
+                    fetch("https://formsubmit.co/ajax/kumavatbdevendar@gmail.com", {
+                        method: "POST",
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: userName,
+                            email: userEmail,
+                            message: userMsg,
+                            _subject: "New Contact from Devendar.ai Portfolio"
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        chatHistory.removeChild(procBubble);
+
+                        const successBubble = document.createElement('div');
+                        successBubble.className = 'chat-bubble-animated success-msg show-bubble';
+                        successBubble.innerHTML = `
+                            <span class="text-[#00ff41] font-bold font-mono-tech">> TRANSFER_COMPLETE</span>
+                            <div class="mt-2 text-white font-mono-tech text-[11px]">
+                                Message successfully secured and transmitted to Devendar's main server.
+                            </div>
+                        `;
+                        
+                        chatHistory.appendChild(successBubble);
+                        scrollToBottom();
+
+                        form.reset();
+                        btnText.innerText = "TRANSMIT_DATA";
+                        submitBtn.style.opacity = "1";
+                        submitBtn.style.pointerEvents = "auto";
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        chatHistory.removeChild(procBubble);
+                        btnText.innerText = "ERROR_TRY_AGAIN";
+                        submitBtn.style.opacity = "1";
+                        submitBtn.style.pointerEvents = "auto";
+                    });
+                }, 500);
+            });
+        }
+
+        // --- 3. ULTRA-SMOOTH CROSSFADE + ZOOM PROJECTS SLIDER SCRIPT ---
+        document.addEventListener('DOMContentLoaded', () => {
             const sliderContainers = document.querySelectorAll('.project-slider-container');
             const allActiveSliders = [];
             
-            // Master Global Timer: Har 3 second me saari active photos ek sath change hongi
+            function goToSlide(slider, nextIndex) {
+                slider.imgs[slider.currentIndex].classList.remove('active-slide');
+                slider.currentIndex = (nextIndex + slider.imgs.length) % slider.imgs.length;
+                slider.imgs[slider.currentIndex].classList.add('active-slide');
+            }
+
             setInterval(() => {
                 allActiveSliders.forEach(slider => {
                     if(slider.imgs.length > 1 && slider.autoPlay) {
-                        slider.imgs[slider.currentIndex].style.display = 'none';
-                        slider.currentIndex = (slider.currentIndex + 1) % slider.imgs.length;
-                        slider.imgs[slider.currentIndex].style.display = 'block';
+                        goToSlide(slider, slider.currentIndex + 1);
                     }
                 });
-            }, 3000);
+            }, 3800);
 
             sliderContainers.forEach(container => {
                 const prefix = container.getAttribute('data-prefix');
@@ -496,80 +1494,69 @@
                 let validImages = [];
                 let currentIndex = 1;
 
-                // FIX: Removed the trailing slash logic so images can be directly in the images folder
                 function loadImages() {
                     const pngUrl = `${prefix}${currentIndex}.png`;
                     const jpgUrl = `${prefix}${currentIndex}.jpg`;
 
                     const imgPng = new Image();
-                    imgPng.onload = () => {
-                        validImages.push(pngUrl);
-                        currentIndex++;
-                        loadImages();
-                    };
+                    imgPng.onload = () => { validImages.push(pngUrl); currentIndex++; loadImages(); };
                     imgPng.onerror = () => {
                         const imgJpg = new Image();
-                        imgJpg.onload = () => {
-                            validImages.push(jpgUrl);
-                            currentIndex++;
-                            loadImages();
-                        };
-                        imgJpg.onerror = () => {
-                            renderSlider(); 
-                        };
+                        imgJpg.onload = () => { validImages.push(jpgUrl); currentIndex++; loadImages(); };
+                        imgJpg.onerror = () => { renderSlider(); };
                         imgJpg.src = jpgUrl;
                     };
                     imgPng.src = pngUrl;
                 }
 
                 function renderSlider() {
+                    const badge = container.querySelector('.status-badge');
+                    const overlay = container.querySelector('.absolute.inset-0'); 
+                    const badgeHTML = badge ? badge.outerHTML : '';
+                    const overlayHTML = overlay ? overlay.outerHTML : '';
+
                     if(validImages.length === 0) {
-                        container.innerHTML = `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.3); font-family:monospace;">NO IMAGE</div>`;
+                        container.innerHTML = `${overlayHTML}${badgeHTML}<div class="w-full h-full flex items-center justify-center font-mono-tech text-[10px] text-gray-500 bg-black/50">NO_IMAGES_FOUND</div>`;
                         return;
                     }
 
                     let imgTags = validImages.map((src, i) => 
-                        `<img src="${src}" style="display:${i === 0 ? 'block' : 'none'}; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; transition: opacity 0.3s;">`
+                        `<img src="${src}" class="slider-img-smooth ${i === 0 ? 'active-slide' : ''}" alt="Project Screenshot ${i + 1}">`
                     ).join('');
 
                     let btns = '';
                     if(validImages.length > 1) {
                         btns = `
-                            <div class="prev-btn" style="position:absolute; left:5px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.7); color:white; width:28px; height:28px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10; border:1px solid rgba(255,255,255,0.2); font-size:12px;">&#10094;</div>
-                            <div class="next-btn" style="position:absolute; right:5px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.7); color:white; width:28px; height:28px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10; border:1px solid rgba(255,255,255,0.2); font-size:12px;">&#10095;</div>
+                            <button class="slider-btn prev-btn" aria-label="Previous Slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+                            <button class="slider-btn next-btn" aria-label="Next Slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
                         `;
                     }
 
-                    container.innerHTML = `<div style="position:relative; width:100%; height:100%;">${imgTags}${btns}</div>`;
+                    container.innerHTML = `${overlayHTML}${badgeHTML}<div style="position:relative; width:100%; height:100%; z-index:1;">${imgTags}${btns}</div>`;
 
                     if(validImages.length > 1) {
-                        const imgs = container.querySelectorAll('img');
+                        const imgs = container.querySelectorAll('.slider-img-smooth');
                         const sliderObj = { imgs: imgs, currentIndex: 0, autoPlay: true };
                         allActiveSliders.push(sliderObj);
 
                         const prevBtn = container.querySelector('.prev-btn');
                         const nextBtn = container.querySelector('.next-btn');
 
-                        prevBtn.addEventListener('click', () => {
-                            sliderObj.imgs[sliderObj.currentIndex].style.display = 'none';
-                            sliderObj.currentIndex = (sliderObj.currentIndex - 1 + sliderObj.imgs.length) % sliderObj.imgs.length;
-                            sliderObj.imgs[sliderObj.currentIndex].style.display = 'block';
-                            
+                        prevBtn.addEventListener('click', (e) => {
+                            e.preventDefault(); e.stopPropagation();
+                            goToSlide(sliderObj, sliderObj.currentIndex - 1);
                             sliderObj.autoPlay = false; 
-                            setTimeout(() => sliderObj.autoPlay = true, 5000);
+                            setTimeout(() => sliderObj.autoPlay = true, 6000);
                         });
 
-                        nextBtn.addEventListener('click', () => {
-                            sliderObj.imgs[sliderObj.currentIndex].style.display = 'none';
-                            sliderObj.currentIndex = (sliderObj.currentIndex + 1) % sliderObj.imgs.length;
-                            sliderObj.imgs[sliderObj.currentIndex].style.display = 'block';
-                            
+                        nextBtn.addEventListener('click', (e) => {
+                            e.preventDefault(); e.stopPropagation();
+                            goToSlide(sliderObj, sliderObj.currentIndex + 1);
                             sliderObj.autoPlay = false;
-                            setTimeout(() => sliderObj.autoPlay = true, 5000);
+                            setTimeout(() => sliderObj.autoPlay = true, 6000);
                         });
                     }
                 }
-
                 loadImages(); 
             });
         });
